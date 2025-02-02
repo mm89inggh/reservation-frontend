@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReservationService } from '../../services/reservation/reservation.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-reservations',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './reservations.component.html',
-  styleUrls: ['./reservations.component.css']
+  styleUrls: ['./reservations.component.css'],
+  providers: [ReservationService]
 })
 export class ReservationsComponent implements OnInit {
 

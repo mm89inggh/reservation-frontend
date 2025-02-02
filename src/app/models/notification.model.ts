@@ -4,6 +4,6 @@ export interface Notification {
     leido: boolean;
     id_usuario: number;
     id_reserva: number;
-    created_at: string; 
+    fechaCreacion: string; 
   }
   

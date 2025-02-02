@@ -3,7 +3,7 @@
   <ul>
     <li *ngFor="let noti of notificaciones" [class.leida]="noti.leido">
       <p>{{ noti.mensaje }}</p>
-      <small>{{ noti.created_at | date:'short' }}</small>
+      <small>{{ noti.fechaCreacion | date:'short' }}</small>
     </li>
   </ul>
 </div>

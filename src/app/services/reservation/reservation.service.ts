@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Reservation } from '../../models/Reservation.model';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReservationService {
 
-  private apiUrl = 'http://localhost:8001/api/reservas'
+  private apiUrl = 'http://localhost:8762/reservation-service/api/reservas'
   
   constructor(private http: HttpClient) {}
   // Simulación de reservas almacenadas
@@ -41,8 +41,9 @@ export class ReservationService {
   /**
    * Retorna la lista de reservas.
    */
-  getReservations(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(this.apiUrl);
+  getReservations(): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.apiUrl, '{"targetMethod": "GET"}', { headers: headers });
   }
 
   /**

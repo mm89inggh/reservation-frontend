@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Notification } from '../../models/notification.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
+
+  private apiUrl = 'http://localhost:8762/notification-service/api/notificaciones';
+
+  constructor(private http: HttpClient) {}
   // Simulación de notificaciones almacenadas
   private notificaciones: Notification[] = [
     {
@@ -14,7 +19,7 @@ export class NotificationService {
       leido: false,
       id_usuario: 3,
       id_reserva: 1,
-      created_at: '2025-02-01T11:00:00'
+      fechaCreacion: '2025-02-01T11:00:00'
     },
     {
       id_notificacion: 2,
@@ -22,7 +27,7 @@ export class NotificationService {
       leido: true,
       id_usuario: 3,
       id_reserva: 2,
-      created_at: '2025-02-01T11:30:00'
+      fechaCreacion: '2025-02-01T11:30:00'
     }
   ];
 
@@ -30,7 +35,8 @@ export class NotificationService {
    * Retorna la lista de notificaciones.
    */
   getNotifications(): Observable<Notification[]> {
-    return of(this.notificaciones);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<any>(this.apiUrl, '{"targetMethod": "GET"}', { headers: headers });
   }
 
   /**
