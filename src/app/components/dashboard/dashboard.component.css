@@ -1,0 +1,99 @@
+.dashboard {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard-header h2 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+  
+  .dashboard-nav {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .dashboard-nav a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .dashboard-nav a:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .resumen-reservas {
+    margin-top: 1.5rem;
+  }
+  
+  .resumen-reservas h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .resumen-reservas ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .resumen-reservas li {
+    background: #f9f9f9;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .reserva-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .reserva-date,
+  .reserva-time {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .reserva-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    background-color: #e0f7fa;
+    color: #00796b;
+    font-size: 0.9rem;
+  }
+  
+  .dashboard-footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1rem;
+  }
+  

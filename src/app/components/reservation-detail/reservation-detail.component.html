@@ -1,0 +1,18 @@
+<div *ngIf="reserva" class="reservation-detail-card">
+  <h2>Detalle de la Reserva</h2>
+  <div class="reservation-info">
+    <p><strong>Fecha:</strong> <span>{{ reserva.fecha }}</span></p>
+    <p><strong>Hora:</strong> <span>{{ reserva.hora }}</span></p>
+    <p><strong>Estado:</strong> <span>{{ reserva.estado }}</span></p>
+    <p><strong>Servicio:</strong> <span>ID {{ reserva.id_servicio }}</span></p>
+    <p><strong>Cliente:</strong> <span>ID {{ reserva.id_usuario }}</span></p>
+  </div>
+  <div class="update-status">
+    <label for="estado">Actualizar estado:</label>
+    <select id="estado" (change)="actualizarEstado($event)">
+      <option value="pendiente" [selected]="reserva.estado==='pendiente'">Pendiente</option>
+      <option value="confirmada" [selected]="reserva.estado==='confirmada'">Confirmada</option>
+      <option value="cancelada" [selected]="reserva.estado==='cancelada'">Cancelada</option>
+    </select>
+  </div>
+</div>

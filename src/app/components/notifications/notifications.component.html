@@ -1,0 +1,9 @@
+<div class="notifications">
+  <h2>Notificaciones</h2>
+  <ul>
+    <li *ngFor="let noti of notificaciones" [class.leida]="noti.leido">
+      <p>{{ noti.mensaje }}</p>
+      <small>{{ noti.created_at | date:'short' }}</small>
+    </li>
+  </ul>
+</div>

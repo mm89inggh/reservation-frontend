@@ -1,0 +1,23 @@
+<div class="transactions">
+  <h2>Historial de Transacciones</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Monto</th>
+        <th>Estado</th>
+        <th>Método de Pago</th>
+        <th>Fecha de Transacción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trans of transacciones">
+        <td>{{ trans.id_transaccion }}</td>
+        <td>{{ trans.monto | currency }}</td>
+        <td>{{ trans.estado }}</td>
+        <td>{{ trans.metodo_pago }}</td>
+        <td>{{ trans.fecha_transaccion | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

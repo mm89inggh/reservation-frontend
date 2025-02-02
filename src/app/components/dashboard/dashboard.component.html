@@ -1,0 +1,26 @@
+<div class="dashboard">
+  <div class="dashboard-header">
+    <h2>Bienvenido, {{ negocio?.nombre || 'Propietario' }}</h2>
+    <nav class="dashboard-nav">
+      <a routerLink="/services-management">Servicios</a>
+      <a routerLink="/notifications">Notificaciones</a>
+      <a routerLink="/business-info">Mi Negocio</a>
+      <a routerLink="/transactions">Transacciones</a>
+    </nav>
+  </div>
+  <section class="resumen-reservas">
+    <h3>Próximas Reservas</h3>
+    <ul>
+      <li *ngFor="let reserva of reservas">
+        <div class="reserva-item">
+          <span class="reserva-date">{{ reserva.fecha }}</span>
+          <span class="reserva-time">{{ reserva.hora }}</span>
+          <span class="reserva-status">{{ reserva.estado }}</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <section class="dashboard-footer">
+    <p>Consulta el panel de administración para más detalles.</p>
+  </section>
+</div>
