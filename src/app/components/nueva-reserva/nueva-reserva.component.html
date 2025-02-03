@@ -1,0 +1,57 @@
+<!-- src/app/components/nueva-reserva/nueva-reserva.component.html -->
+<div class="nueva-reserva">
+    <h2>Nueva Reserva</h2>
+    
+    <!-- Sección del mapa -->
+    <div class="map-section">
+      <!-- Se asume que Angular Google Maps (AGM) está configurado correctamente -->
+      <agm-map [latitude]="center.lat" [longitude]="center.lng" [zoom]="zoom">
+        <agm-marker *ngFor="let business of businesses"
+                    [latitude]="parseCoordinates(business.coordenadas).lat"
+                    [longitude]="parseCoordinates(business.coordenadas).lng"
+                    (markerClick)="onMarkerClick(business)">
+          <agm-info-window>
+            <div class="info-window">
+              <strong>{{ business.nombre }}</strong><br>
+              {{ business.direccion }}<br>
+              Contacto: {{ business.contacto }}
+            </div>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+    </div>
+    
+    <!-- Formulario de reserva (se muestra al seleccionar un negocio) -->
+    <div *ngIf="selectedBusiness" class="reservation-form">
+      <h3>Crear Reserva para: {{ selectedBusiness.nombre }}</h3>
+      <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+        <!-- Campo oculto precargado con el ID del negocio -->
+        <input type="hidden" formControlName="businessId">
+        
+        <div class="form-group">
+          <label for="date">Fecha:</label>
+          <input type="date" id="date" formControlName="date">
+        </div>
+        
+        <div class="form-group">
+          <label for="time">Hora:</label>
+          <input type="time" id="time" formControlName="time">
+        </div>
+        
+        <div class="form-group">
+          <label for="serviceId">Servicio:</label>
+          <select id="serviceId" formControlName="serviceId">
+            <option value="">Seleccione un servicio</option>
+            <option value="1">Corte de Cabello</option>
+            <option value="2">Coloración</option>
+            <!-- Se pueden agregar más opciones -->
+          </select>
+        </div>
+        
+        <button type="submit" class="btn submit-btn" [disabled]="reservationForm.invalid">
+          Crear Reserva
+        </button>
+      </form>
+    </div>
+  </div>
+  

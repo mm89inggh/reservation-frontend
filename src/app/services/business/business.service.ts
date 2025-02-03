@@ -7,29 +7,31 @@ import { Business } from '../../models/business.model';
   providedIn: 'root'
 })
 export class BusinessService {
-  // Simulación de información del negocio
-  private negocio: Business = {
-    id_negocio: 1,
-    nombre: 'Mi Peluquería',
-    direccion: 'Calle Principal 123',
-    contacto: '555-1234',
-    coordenadas: '40.416775,-3.703790',
-    id_usuario: 2
-  };
+  // Simulación de una lista de negocios
+  private businesses: Business[] = [
+    {
+      id_negocio: 1,
+      nombre: 'Mi Peluquería',
+      direccion: 'Calle Principal 123',
+      contacto: '555-1234',
+      coordenadas: '40.416775,-3.703790',
+      id_usuario: 2
+    },
+    {
+      id_negocio: 2,
+      nombre: 'Spa Relax',
+      direccion: 'Avenida de la Salud 456',
+      contacto: '555-5678',
+      coordenadas: '40.417000,-3.704000',
+      id_usuario: 3
+    }
+    // Se pueden agregar más negocios
+  ];
 
   /**
-   * Retorna la información del negocio.
+   * Retorna la lista completa de negocios.
    */
-  getBusinessInfo(): Observable<Business> {
-    return of(this.negocio);
-  }
-
-  /**
-   * Actualiza la información del negocio.
-   * Se simula la actualización mediante la combinación (spread) de objetos.
-   */
-  updateBusinessInfo(updatedNegocio: Partial<Business>): Observable<boolean> {
-    this.negocio = { ...this.negocio, ...updatedNegocio };
-    return of(true);
+  getAllBusinesses(): Observable<Business[]> {
+    return of(this.businesses);
   }
 }
