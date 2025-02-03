@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class NotificationService {
 
-  private apiUrl = 'http://localhost:8762/notification-service/api/notificaciones';
+  private apiUrl = 'http://ec2-18-205-162-176.compute-1.amazonaws.com:8762/notification-service/api/notificaciones';
 
   constructor(private http: HttpClient) {}
   // Simulación de notificaciones almacenadas

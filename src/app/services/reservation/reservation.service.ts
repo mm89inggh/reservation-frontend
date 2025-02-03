@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reservation } from '../../models/reservation.model';
 @Injectable()
 export class ReservationService {
-  private apiUrl = 'http://localhost:8762/reservation-service/api/reservas';
+  private apiUrl = 'http://ec2-18-205-162-176.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
 
   constructor(private http: HttpClient) {}
 
