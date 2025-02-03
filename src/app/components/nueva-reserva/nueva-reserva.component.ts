@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Business } from '../../models/business.model';
 import { take } from 'rxjs/operators';
-import { GoogleMapsModule } from '@angular/google-maps';
+import {GoogleMap, MapMarker} from '@angular/google-maps';
 
 @Component({
   selector: 'app-nueva-reserva',
@@ -15,20 +15,27 @@ import { GoogleMapsModule } from '@angular/google-maps';
   imports: [
     CommonModule,
     HttpClientModule,
-    GoogleMapsModule, // ✅ Se usa GoogleMapsModule directamente
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    GoogleMap,
+    MapMarker
   ],
   providers: [ReservationService],
   templateUrl: './nueva-reserva.component.html'
 })
 export class NuevaReservaComponent implements OnInit {
+  /** Listado completo de negocios. */
   businesses: Business[] = [];
+
+  /** Negocio seleccionado al hacer clic en un marcador. */
   selectedBusiness: Business | null = null;
+
+  /** Formulario de creación de reserva. */
   reservationForm: FormGroup;
 
+  /** Ajustes iniciales del mapa. */
   zoom = 12;
-  center: google.maps.LatLngLiteral = { lat: 40.416775, lng: -3.70379 }; // Centro predeterminado en Madrid
+  center: google.maps.LatLngLiteral = { lat: 40.416775, lng: -3.70379 }; // Centro en Madrid por defecto
 
   constructor(
     private businessService: BusinessService,
@@ -44,10 +51,12 @@ export class NuevaReservaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Al iniciar, cargamos la lista de negocios y ajustamos el centro del mapa
     this.businessService.getAllBusinesses().pipe(take(1)).subscribe({
       next: (businesses) => {
         this.businesses = businesses;
         if (businesses.length > 0) {
+          // Ajusta el centro del mapa al primer negocio de la lista
           this.center = this.parseCoordinates(businesses[0].coordenadas);
         }
       },
@@ -57,11 +66,12 @@ export class NuevaReservaComponent implements OnInit {
 
   /**
    * Convierte una cadena de coordenadas "lat,lng" en un objeto LatLngLiteral válido.
+   * Si el formato es inválido o no existe, retorna un valor por defecto (Madrid).
    */
   parseCoordinates(coords: string): google.maps.LatLngLiteral {
     if (!coords) {
-      console.warn('Coordenadas no proporcionadas, usando valores predeterminados.');
-      return { lat: 40.416775, lng: -3.70379 }; // Valor predeterminado: Madrid
+      console.warn('Coordenadas no proporcionadas, usando valores predeterminados (Madrid).');
+      return { lat: 40.416775, lng: -3.70379 };
     }
 
     const parts = coords.split(',').map(coord => parseFloat(coord.trim()));
@@ -69,12 +79,13 @@ export class NuevaReservaComponent implements OnInit {
       return { lat: parts[0], lng: parts[1] };
     }
 
-    console.warn(`Formato incorrecto de coordenadas: ${coords}. Se usará el valor predeterminado.`);
-    return { lat: 40.416775, lng: -3.70379 }; // Retorno seguro en caso de error
+    console.warn(`Formato incorrecto de coordenadas: "${coords}". Se usará el valor predeterminado (Madrid).`);
+    return { lat: 40.416775, lng: -3.70379 };
   }
 
   /**
-   * Selecciona un negocio al hacer clic en un marcador del mapa.
+   * Accionado al hacer clic sobre un marcador del mapa. 
+   * Establece el negocio seleccionado y actualiza el formulario.
    */
   onMarkerClick(business: Business): void {
     if (!business) return;
@@ -83,7 +94,7 @@ export class NuevaReservaComponent implements OnInit {
   }
 
   /**
-   * Envía el formulario para crear una reserva.
+   * Envía el formulario y crea una nueva reserva a través del servicio.
    */
   onSubmit(): void {
     if (this.reservationForm.valid) {

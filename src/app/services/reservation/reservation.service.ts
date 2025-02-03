@@ -2,17 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reservation } from '../../models/reservation.model';
-
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ReservationService {
+  private apiUrl = 'http://localhost:8762/reservation-service/api/reservas';
 
-  private apiUrl = 'http://localhost:8762/reservation-service/api/reservas'
-  
   constructor(private http: HttpClient) {}
-  // Simulación de reservas almacenadas
+
+  // Simulación de reservas almacenadas localmente
   private reservas: Reservation[] = [
     {
       id_reserva: 1,
@@ -39,15 +35,15 @@ export class ReservationService {
   ];
 
   /**
-   * Retorna la lista de reservas.
+   * Ejemplo de método para obtener reservas desde el backend (aún en mock).
    */
   getReservations(): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(this.apiUrl, '{"targetMethod": "GET"}', { headers: headers });
+    return this.http.post<any>(this.apiUrl, '{"targetMethod": "GET"}', { headers });
   }
 
   /**
-   * Simula la cancelación de una reserva actualizando su estado.
+   * Simula la cancelación de una reserva actualizando su estado en la lista local.
    */
   cancelReservation(id: number): Observable<boolean> {
     this.reservas = this.reservas.map(r =>
@@ -57,7 +53,7 @@ export class ReservationService {
   }
 
   /**
-   * Retorna una reserva en específico según su ID.
+   * Obtiene una reserva por ID (ejemplo en memoria).
    */
   getReservationById(id: number): Observable<Reservation | undefined> {
     const reserva = this.reservas.find(r => r.id_reserva === id);
@@ -65,7 +61,7 @@ export class ReservationService {
   }
 
   /**
-   * Actualiza el estado de una reserva.
+   * Actualiza el estado de una reserva en la lista local (solo simulación).
    */
   updateReservationStatus(id: number, nuevoEstado: string): Observable<boolean> {
     this.reservas = this.reservas.map(r =>
@@ -73,19 +69,29 @@ export class ReservationService {
     );
     return of(true);
   }
-  createReservation(newReservation: { businessId: number; date: string; time: string; serviceId: number }): Observable<Reservation> {
-    const newId = this.reservas.length > 0 ? Math.max(...this.reservas.map(r => r.id_reserva)) + 1 : 1;
+
+  /**
+   * Crea una nueva reserva en la lista local (simulación).
+   */
+  createReservation(
+    newReservation: { businessId: number; date: string; time: string; serviceId: number }
+  ): Observable<Reservation> {
+    const newId = this.reservas.length > 0
+      ? Math.max(...this.reservas.map(r => r.id_reserva)) + 1
+      : 1;
+
     const createdReservation: Reservation = {
       id_reserva: newId,
       fecha: newReservation.date,
       hora: newReservation.time,
       estado: 'pendiente',
-      id_usuario: 3,
+      id_usuario: 3, // Puedes ajustar el ID de usuario según tu lógica
       id_negocio: newReservation.businessId,
       id_servicio: newReservation.serviceId,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
+
     this.reservas.push(createdReservation);
     return of(createdReservation);
   }

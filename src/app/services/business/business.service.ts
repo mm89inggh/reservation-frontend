@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Business } from '../../models/business.model';
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class BusinessService {
   private businesses: Business[] = [
     {
@@ -25,15 +22,25 @@ export class BusinessService {
     }
   ];
 
+  /**
+   * Retorna la información de un negocio en concreto (mock).
+   */
   getBusinessInfo(): Observable<Business> {
+    // Ejemplo: se retorna siempre el primer negocio
     return of(this.businesses[0]);
   }
 
+  /**
+   * Actualiza información de un negocio (en el array local; simulación).
+   */
   updateBusinessInfo(updatedInfo: Partial<Business>): Observable<boolean> {
     this.businesses[0] = { ...this.businesses[0], ...updatedInfo };
     return of(true);
   }
 
+  /**
+   * Retorna todos los negocios disponibles (mock).
+   */
   getAllBusinesses(): Observable<Business[]> {
     return of(this.businesses);
   }

@@ -1,44 +1,47 @@
 <div class="nueva-reserva">
     <h2>Nueva Reserva</h2>
-
+  
     <!-- Sección del mapa -->
     <div class="map-section">
-        <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
-            <map-marker *ngFor="let business of businesses"
-                        [position]="parseCoordinates(business.coordenadas)"
-                        (mapClick)="onMarkerClick(business)">
-            </map-marker>
-        </google-map>
+      <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
+        <map-marker
+          *ngFor="let business of businesses"
+          [position]="parseCoordinates(business.coordenadas)"
+          (mapClick)="onMarkerClick(business)">
+        </map-marker>
+      </google-map>
     </div>
-
+  
     <!-- Formulario de reserva (se muestra al seleccionar un negocio) -->
     <div *ngIf="selectedBusiness" class="reservation-form">
-        <h3>Crear Reserva para: {{ selectedBusiness.nombre }}</h3>
-        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-            <input type="hidden" formControlName="businessId">
-
-            <div class="form-group">
-                <label for="date">Fecha:</label>
-                <input type="date" id="date" formControlName="date">
-            </div>
-
-            <div class="form-group">
-                <label for="time">Hora:</label>
-                <input type="time" id="time" formControlName="time">
-            </div>
-
-            <div class="form-group">
-                <label for="serviceId">Servicio:</label>
-                <select id="serviceId" formControlName="serviceId">
-                    <option value="">Seleccione un servicio</option>
-                    <option value="1">Corte de Cabello</option>
-                    <option value="2">Coloración</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn submit-btn" [disabled]="reservationForm.invalid">
-                Crear Reserva
-            </button>
-        </form>
+      <h3>Crear Reserva para: {{ selectedBusiness.nombre }}</h3>
+      <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="businessId">
+  
+        <div class="form-group">
+          <label for="date">Fecha:</label>
+          <input type="date" id="date" formControlName="date">
+        </div>
+  
+        <div class="form-group">
+          <label for="time">Hora:</label>
+          <input type="time" id="time" formControlName="time">
+        </div>
+  
+        <div class="form-group">
+          <label for="serviceId">Servicio:</label>
+          <select id="serviceId" formControlName="serviceId">
+            <option value="">Seleccione un servicio</option>
+            <option value="1">Corte de Cabello</option>
+            <option value="2">Coloración</option>
+            <!-- Agrega aquí más servicios según tus necesidades -->
+          </select>
+        </div>
+  
+        <button type="submit" class="btn submit-btn" [disabled]="reservationForm.invalid">
+          Crear Reserva
+        </button>
+      </form>
     </div>
-</div>
+  </div>
+  
