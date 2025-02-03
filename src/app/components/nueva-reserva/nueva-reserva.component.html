@@ -1,24 +1,14 @@
-<!-- src/app/components/nueva-reserva/nueva-reserva.component.html -->
 <div class="nueva-reserva">
     <h2>Nueva Reserva</h2>
     
     <!-- Sección del mapa -->
     <div class="map-section">
-      <!-- Se asume que Angular Google Maps (AGM) está configurado correctamente -->
-      <agm-map [latitude]="center.lat" [longitude]="center.lng" [zoom]="zoom">
-        <agm-marker *ngFor="let business of businesses"
-                    [latitude]="parseCoordinates(business.coordenadas).lat"
-                    [longitude]="parseCoordinates(business.coordenadas).lng"
-                    (markerClick)="onMarkerClick(business)">
-          <agm-info-window>
-            <div class="info-window">
-              <strong>{{ business.nombre }}</strong><br>
-              {{ business.direccion }}<br>
-              Contacto: {{ business.contacto }}
-            </div>
-          </agm-info-window>
-        </agm-marker>
-      </agm-map>
+      <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
+        <map-marker *ngFor="let business of businesses"
+                    [position]="parseCoordinates(business.coordenadas)"
+                    (mapClick)="onMarkerClick(business)">
+        </map-marker>
+      </google-map>
     </div>
     
     <!-- Formulario de reserva (se muestra al seleccionar un negocio) -->
@@ -54,4 +44,3 @@
       </form>
     </div>
   </div>
-  

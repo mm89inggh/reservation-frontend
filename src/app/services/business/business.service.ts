@@ -1,7 +1,7 @@
+// src/app/services/business/business.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Business } from '../../models/business.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,23 @@ export class BusinessService {
     }
     // Se pueden agregar más negocios
   ];
+
+  /**
+   * Retorna la información de un negocio.
+   * En este ejemplo se retorna el primer negocio de la lista.
+   */
+  getBusinessInfo(): Observable<Business> {
+    return of(this.businesses[0]);
+  }
+
+  /**
+   * Actualiza la información del negocio.
+   * Se simula la actualización del primer negocio de la lista y se retorna un Observable<boolean> indicando el éxito.
+   */
+  updateBusinessInfo(updatedInfo: Partial<Business>): Observable<boolean> {
+    this.businesses[0] = { ...this.businesses[0], ...updatedInfo };
+    return of(true);
+  }
 
   /**
    * Retorna la lista completa de negocios.

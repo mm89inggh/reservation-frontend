@@ -1,4 +1,3 @@
-// src/app/components/nueva-reserva/nueva-reserva.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Business } from '../../models/business.model';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -6,8 +5,7 @@ import { BusinessService } from '../../services/business/business.service';
 import { ReservationService } from '../../services/reservation/reservation.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-// Importa el módulo de configuración de AGM que creamos
-import { AgmConfigModule } from '../../modules/agm-config.module';
+import { GoogleMapsConfigModule } from '../../modules/google-maps-config.module';
 
 @Component({
   selector: 'app-nueva-reserva',
@@ -18,7 +16,7 @@ import { AgmConfigModule } from '../../modules/agm-config.module';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AgmConfigModule  // Usa el módulo configurado en lugar de forRoot aquí.
+    GoogleMapsConfigModule
   ]
 })
 export class NuevaReservaComponent implements OnInit {
@@ -28,7 +26,7 @@ export class NuevaReservaComponent implements OnInit {
   
   // Configuración inicial del mapa (centrado en Madrid, por ejemplo)
   zoom: number = 12;
-  center: { lat: number, lng: number } = { lat: 40.416775, lng: -3.70379 };
+  center: google.maps.LatLngLiteral = { lat: 40.416775, lng: -3.70379 };
 
   constructor(
     private businessService: BusinessService,
@@ -55,9 +53,9 @@ export class NuevaReservaComponent implements OnInit {
   }
 
   /**
-   * Convierte la cadena de coordenadas (lat,lng) en un objeto numérico.
+   * Convierte la cadena de coordenadas (lat,lng) en un objeto numérico compatible con Google Maps.
    */
-  parseCoordinates(coords: string): { lat: number, lng: number } {
+  parseCoordinates(coords: string): google.maps.LatLngLiteral {
     const parts = coords.split(',');
     return { lat: parseFloat(parts[0]), lng: parseFloat(parts[1]) };
   }
