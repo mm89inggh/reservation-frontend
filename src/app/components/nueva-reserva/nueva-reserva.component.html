@@ -3,7 +3,7 @@
 
     <!-- Sección del mapa -->
     <div class="map-section">
-        <google-map [height]="'400px'" [width]="'100%'" [center]="center" [zoom]="zoom">
+        <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
             <map-marker *ngFor="let business of businesses"
                         [position]="parseCoordinates(business.coordenadas)"
                         (mapClick)="onMarkerClick(business)">
@@ -15,7 +15,6 @@
     <div *ngIf="selectedBusiness" class="reservation-form">
         <h3>Crear Reserva para: {{ selectedBusiness.nombre }}</h3>
         <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-            <!-- Campo oculto precargado con el ID del negocio -->
             <input type="hidden" formControlName="businessId">
 
             <div class="form-group">

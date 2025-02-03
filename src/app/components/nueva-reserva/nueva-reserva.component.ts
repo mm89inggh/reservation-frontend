@@ -4,15 +4,21 @@ import { BusinessService } from '../../services/business/business.service';
 import { ReservationService } from '../../services/reservation/reservation.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { GoogleMapsConfigModule } from '../../modules/google-maps-config.module';
 import { Business } from '../../models/business.model';
 import { take } from 'rxjs/operators';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-nueva-reserva',
   styleUrls: ['./nueva-reserva.component.css'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, GoogleMapsConfigModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    GoogleMapsModule, // ✅ Se usa GoogleMapsModule directamente
+    ReactiveFormsModule,
+    FormsModule
+  ],
   providers: [ReservationService],
   templateUrl: './nueva-reserva.component.html'
 })
@@ -42,10 +48,7 @@ export class NuevaReservaComponent implements OnInit {
       next: (businesses) => {
         this.businesses = businesses;
         if (businesses.length > 0) {
-          const firstCoords = this.parseCoordinates(businesses[0].coordenadas);
-          if (firstCoords) {
-            this.center = firstCoords;
-          }
+          this.center = this.parseCoordinates(businesses[0].coordenadas);
         }
       },
       error: (err) => console.error('Error al obtener negocios:', err)
@@ -58,7 +61,7 @@ export class NuevaReservaComponent implements OnInit {
   parseCoordinates(coords: string): google.maps.LatLngLiteral {
     if (!coords) {
       console.warn('Coordenadas no proporcionadas, usando valores predeterminados.');
-      return { lat: 0, lng: 0 }; // Coordenadas seguras en caso de error
+      return { lat: 40.416775, lng: -3.70379 }; // Valor predeterminado: Madrid
     }
 
     const parts = coords.split(',').map(coord => parseFloat(coord.trim()));
@@ -67,7 +70,7 @@ export class NuevaReservaComponent implements OnInit {
     }
 
     console.warn(`Formato incorrecto de coordenadas: ${coords}. Se usará el valor predeterminado.`);
-    return { lat: 0, lng: 0 }; // Retorno seguro en caso de error
+    return { lat: 40.416775, lng: -3.70379 }; // Retorno seguro en caso de error
   }
 
   /**
