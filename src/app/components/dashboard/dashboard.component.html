@@ -8,9 +8,10 @@
       <a routerLink="/transactions">Transacciones</a>
     </nav>
   </div>
+
   <section class="resumen-reservas">
     <h3>Próximas Reservas</h3>
-    <ul>
+    <ul *ngIf="reservas.length > 0; else noReservas">
       <li *ngFor="let reserva of reservas">
         <div class="reserva-item">
           <span class="reserva-date">{{ reserva.fecha }}</span>
@@ -19,7 +20,11 @@
         </div>
       </li>
     </ul>
+    <ng-template #noReservas>
+      <p>No hay reservas próximas.</p>
+    </ng-template>
   </section>
+
   <section class="dashboard-footer">
     <p>Consulta el panel de administración para más detalles.</p>
   </section>

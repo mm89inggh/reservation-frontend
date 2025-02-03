@@ -8,7 +8,8 @@ import { ReservationService } from '../../services/reservation/reservation.servi
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './reservation-detail.component.html',
-  styleUrls: ['./reservation-detail.component.css']
+  styleUrls: ['./reservation-detail.component.css'],
+   providers: [ReservationService],
 })
 export class ReservationDetailComponent implements OnInit {
   reserva: any;

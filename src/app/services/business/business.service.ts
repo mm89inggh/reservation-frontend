@@ -1,47 +1,42 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Business } from '../../models/business.model';
-@Injectable({ providedIn: 'root' })
+
+@Injectable()
 export class BusinessService {
-  private businesses: Business[] = [
-    {
-      id_negocio: 1,
-      nombre: 'Mi Peluquería',
-      direccion: 'Calle Principal 123',
-      contacto: '555-1234',
-      coordenadas: '40.416775,-3.703790',
-      id_usuario: 2
-    },
-    {
-      id_negocio: 2,
-      nombre: 'Spa Relax',
-      direccion: 'Avenida de la Salud 456',
-      contacto: '555-5678',
-      coordenadas: '40.417000,-3.704000',
-      id_usuario: 3
-    }
-  ];
+  private apiUrl = 'http://ec2-18-205-162-176.compute-1.amazonaws.com:8762/reservation-service/api/negocios';
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  constructor(private http: HttpClient) {}
 
   /**
-   * Retorna la información de un negocio en concreto (mock).
+   * Obtiene la información de un negocio por su ID.
    */
-  getBusinessInfo(): Observable<Business> {
-    // Ejemplo: se retorna siempre el primer negocio
-    return of(this.businesses[0]);
+  getBusinessInfo(id_negocio: number): Observable<any> {
+    const body = {
+      targetMethod: "GET",
+      body: { id_negocio }
+    };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
-   * Actualiza información de un negocio (en el array local; simulación).
+   * Actualiza la información de un negocio.
    */
-  updateBusinessInfo(updatedInfo: Partial<Business>): Observable<boolean> {
-    this.businesses[0] = { ...this.businesses[0], ...updatedInfo };
-    return of(true);
+  updateBusinessInfo(id_negocio: number, updatedInfo: Partial<Business>): Observable<any> {
+    const body = {
+      targetMethod: "UPDATE",
+      body: { id_negocio, ...updatedInfo }
+    };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
-   * Retorna todos los negocios disponibles (mock).
+   * Obtiene la lista de todos los negocios.
    */
-  getAllBusinesses(): Observable<Business[]> {
-    return of(this.businesses);
+  getAllBusinesses(): Observable<any> {
+    const body = { targetMethod: "GET" };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 }

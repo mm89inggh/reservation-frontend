@@ -22,7 +22,7 @@ import { ServiceService } from '../../services/service/service.service';
     GoogleMap,
     MapMarker
   ],
-  providers: [ReservationService],
+  providers: [ReservationService, ServiceService, BusinessService],
   templateUrl: './nueva-reserva.component.html'
 })
 export class NuevaReservaComponent implements OnInit {

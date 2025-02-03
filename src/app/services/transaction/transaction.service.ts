@@ -1,36 +1,56 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Transaction } from '../../models/transaction.model';
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TransactionService {
-  // Simulación de transacciones realizadas
-  private transacciones: Transaction[] = [
-    {
-      id_transaccion: 1,
-      monto: 15.00,
-      estado: 'completada',
-      metodo_pago: 'tarjeta',
-      fecha_transaccion: '2025-02-01T10:00:00',
-      id_reserva: 1
-    },
-    {
-      id_transaccion: 2,
-      monto: 20.00,
-      estado: 'pendiente',
-      metodo_pago: 'efectivo',
-      fecha_transaccion: '2025-02-01T11:00:00',
-      id_reserva: 2
-    }
-  ];
+  private apiUrl = 'http://ec2-18-205-162-176.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  constructor(private http: HttpClient) {}
 
   /**
-   * Retorna la lista de transacciones.
+   * Obtiene la lista de transacciones desde el backend.
    */
-  getTransactions(): Observable<Transaction[]> {
-    return of(this.transacciones);
+  getTransactions(): Observable<any> {
+    const body = { targetMethod: "GET" };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+  }
+
+  /**
+   * Obtiene una transacción por su ID.
+   */
+  getTransactionById(id: number): Observable<any> {
+    const body = {
+      targetMethod: "GET",
+      body: { id_transaccion: id }
+    };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+  }
+
+  /**
+   * Crea una nueva transacción.
+   */
+  createTransaction(transaction: Omit<Transaction, 'id_transaccion'>): Observable<any> {
+    const body = {
+      targetMethod: "POST",
+      body: transaction
+    };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+  }
+
+  /**
+   * Actualiza el estado de una transacción.
+   */
+  updateTransactionStatus(id: number, estado: string): Observable<any> {
+    const body = {
+      targetMethod: "UPDATE",
+      body: {
+        id_transaccion: id,
+        estado: estado
+      }
+    };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 }

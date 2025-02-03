@@ -1,55 +1,48 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Service } from '../../models/Service-manager.model';
 
-
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ServiceService {
-  // Simulación de servicios ofrecidos
-  private servicios: Service[] = [
-    {
-      id_servicio: 1,
-      nombre: 'Corte de Cabello',
-      descripcion: 'Corte y peinado',
-      duracion: 30,
-      precio: 15.00,
-      id_negocio: 1
-    },
-    {
-      id_servicio: 2,
-      nombre: 'Manicure',
-      descripcion: 'Cuidado de uñas',
-      duracion: 45,
-      precio: 20.00,
-      id_negocio: 1
-    }
-  ];
+  private apiUrl = 'http://ec2-18-205-162-176.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  constructor(private http: HttpClient) {}
 
   /**
-   * Retorna la lista de servicios.
+   * Obtiene la lista de servicios desde el backend.
    */
-  getServices(): Observable<Service[]> {
-    return of(this.servicios);
+  getServices(): Observable<any> {
+    const body = { targetMethod: "GET" };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
-   * Agrega un nuevo servicio a la lista.
+   * Agrega un nuevo servicio enviando una solicitud POST con targetMethod "ADD_SERVICE".
    */
-  addService(servicio: Omit<Service, 'id_servicio' | 'id_negocio'>): Observable<boolean> {
-    const newId = this.servicios.length + 1;
-    // Se asume que el servicio siempre pertenece al negocio con id_negocio = 1
-    this.servicios.push({ id_servicio: newId, ...servicio, id_negocio: 1 });
-    return of(true);
+  addService(servicio: Omit<Service, 'id_servicio' | 'id_negocio'>, negocioId: number): Observable<any> {
+    const body = {
+      targetMethod: "POST",
+      body: {
+        nombre: servicio.nombre,
+        descripcion: servicio.descripcion,
+        duracion: servicio.duracion,
+        precio: servicio.precio,
+        id_negocio: negocioId
+      }
+    };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
-   * Elimina un servicio de la lista según su ID.
+   * Elimina un servicio enviando una solicitud POST con targetMethod "DELETE_SERVICE".
    */
-  deleteService(id: number): Observable<boolean> {
-    this.servicios = this.servicios.filter(s => s.id_servicio !== id);
-    return of(true);
+  deleteService(id: number): Observable<any> {
+    const body = {
+      targetMethod: "DELETE",
+      body: { id_servicio: id }
+    };
+    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 }

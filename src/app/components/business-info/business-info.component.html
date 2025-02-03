@@ -1,22 +1,26 @@
 <div class="business-info">
   <h2>Información del Negocio</h2>
-  <form (ngSubmit)="guardarCambios()">
+  <form (ngSubmit)="guardarCambios()" *ngIf="negocio">
     <div class="form-group">
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" [(ngModel)]="negocio.nombre" name="nombre" required>
     </div>
+
     <div class="form-group">
       <label for="direccion">Dirección:</label>
       <textarea id="direccion" [(ngModel)]="negocio.direccion" name="direccion" required></textarea>
     </div>
+
     <div class="form-group">
       <label for="contacto">Contacto:</label>
       <input type="text" id="contacto" [(ngModel)]="negocio.contacto" name="contacto" required>
     </div>
+
     <div class="form-group">
       <label for="coordenadas">Coordenadas:</label>
       <input type="text" id="coordenadas" [(ngModel)]="negocio.coordenadas" name="coordenadas">
     </div>
+
     <button type="submit">Guardar Cambios</button>
   </form>
 </div>
