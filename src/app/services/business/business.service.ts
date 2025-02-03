@@ -1,4 +1,3 @@
-// src/app/services/business/business.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Business } from '../../models/business.model';

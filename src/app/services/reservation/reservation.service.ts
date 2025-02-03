@@ -1,4 +1,3 @@
-// src/app/services/reservation/reservation.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
