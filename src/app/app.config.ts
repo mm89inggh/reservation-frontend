@@ -9,7 +9,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://localhost:8080',
+        url: 'http://ec2-3-82-109-121.compute-1.amazonaws.com:8080',
         realm: 'reserva',
         clientId: 'reservaClient'
       },
