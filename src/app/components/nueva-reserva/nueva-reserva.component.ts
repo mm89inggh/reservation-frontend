@@ -1,6 +1,7 @@
+// src/app/components/nueva-reserva/nueva-reserva.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Business } from '../../models/business.model';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BusinessService } from '../../services/business/business.service';
 import { ReservationService } from '../../services/reservation/reservation.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,7 +17,8 @@ import { GoogleMapsConfigModule } from '../../modules/google-maps-config.module'
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    GoogleMapsConfigModule
+    GoogleMapsConfigModule,
+    FormsModule
   ]
 })
 export class NuevaReservaComponent implements OnInit {
@@ -76,9 +78,13 @@ export class NuevaReservaComponent implements OnInit {
   onSubmit(): void {
     if (this.reservationForm.valid) {
       const newReservation = this.reservationForm.value;
-      // Aquí se llamaría al servicio para enviar la reserva al backend.
-      console.log('Nueva Reserva creada:', newReservation);
-      // Ejemplo: this.reservationService.createReservation(newReservation).subscribe(...);
+      this.reservationService.createReservation(newReservation).subscribe(created => {
+        console.log('Nueva Reserva creada:', created);
+        alert('Reserva creada exitosamente');
+        // Reiniciamos el formulario y limpiamos la selección
+        this.reservationForm.reset();
+        this.selectedBusiness = null;
+      });
     }
   }
 }

@@ -1,17 +1,17 @@
+// src/app/services/reservation/reservation.service.ts
 import { Injectable } from '@angular/core';
-import { Reservation } from '../../models/Reservation.model';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Reservation } from '../../models/reservation.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-
-  private apiUrl = 'http://localhost:8762/reservation-service/api/reservas'
+  private apiUrl = 'http://localhost:8762/reservation-service/api/reservas';
   
   constructor(private http: HttpClient) {}
+
   // Simulación de reservas almacenadas
   private reservas: Reservation[] = [
     {
@@ -39,7 +39,7 @@ export class ReservationService {
   ];
 
   /**
-   * Retorna la lista de reservas.
+   * Retorna la lista de reservas (a través de HTTP o simulada).
    */
   getReservations(): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -72,5 +72,27 @@ export class ReservationService {
       r.id_reserva === id ? { ...r, estado: nuevoEstado } : r
     );
     return of(true);
+  }
+  
+  /**
+   * Crea una nueva reserva (simulación).
+   * Se asume que el objeto newReservation contiene:
+   * { businessId, date, time, serviceId }
+   */
+  createReservation(newReservation: any): Observable<Reservation> {
+    const newId = this.reservas.length > 0 ? Math.max(...this.reservas.map(r => r.id_reserva)) + 1 : 1;
+    const createdReservation: Reservation = {
+      id_reserva: newId,
+      fecha: newReservation.date,
+      hora: newReservation.time,
+      estado: 'pendiente',
+      id_usuario: 3, // Se asigna un usuario simulado; en una app real esto vendría de la sesión
+      id_negocio: newReservation.businessId,
+      id_servicio: newReservation.serviceId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    this.reservas.push(createdReservation);
+    return of(createdReservation);
   }
 }

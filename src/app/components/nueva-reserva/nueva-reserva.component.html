@@ -3,7 +3,7 @@
     
     <!-- Sección del mapa -->
     <div class="map-section">
-      <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
+      <google-map [height]="'400px'" [width]="'100%'" [center]="center" [zoom]="zoom">
         <map-marker *ngFor="let business of businesses"
                     [position]="parseCoordinates(business.coordenadas)"
                     (mapClick)="onMarkerClick(business)">
@@ -44,3 +44,4 @@
       </form>
     </div>
   </div>
+  
