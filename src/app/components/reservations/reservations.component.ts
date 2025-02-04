@@ -70,16 +70,16 @@ export class ReservationsComponent implements OnInit {
    * Retorna el color del estado de la reserva en base a su valor.
    * @param estado Estado de la reserva
    */
-  getEstadoColor(estado: string): "success" | "secondary" | "info" | "warn" | "danger" | "contrast" | undefined {
+  getEstadoColor(estado: string): "success" | "secondary" | "info" | "warning" | "danger" | "contrast" | undefined {
     switch (estado.toLowerCase()) {
-      case 'pendiente':
-        return 'warn'; // Amarillo para advertencia
-      case 'confirmada':
-        return 'success'; // Verde para éxito
-      case 'cancelada':
-        return 'danger'; // Rojo para cancelado
+      case "pendiente":
+        return "warning"; // ✅ CORREGIDO: "warning" en lugar de "warn"
+      case "confirmada":
+        return "success";
+      case "cancelada":
+        return "danger";
       default:
-        return 'info'; // Azul para información general
+        return "secondary";
     }
   }
   
