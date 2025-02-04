@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Notification } from '../../models/notification.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class NotificationService {
-  private apiUrl = 'http://ec2-3-87-210-143.compute-1.amazonaws.com:8762/notification-service/api/notificaciones';
+  private apiUrl = `${environment.apiUrl}/notification-service/api/notificaciones`;
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) {}

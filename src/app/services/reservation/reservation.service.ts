@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Reservation } from '../../models/reservation.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-  private apiUrl = 'http://ec2-3-87-210-143.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  private apiUrl = `${environment.apiUrl}/reservation-service/api/reservas`;
 
   constructor(private http: HttpClient) {}
 

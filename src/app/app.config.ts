@@ -4,14 +4,15 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://ec2-3-87-210-143.compute-1.amazonaws.com:8080',
-        realm: 'reserva',
-        clientId: 'reservaClient'
+        url: environment.keycloakUrl,
+        realm: environment.realm,
+        clientId: environment.clientId
       },
       initOptions: {
         onLoad: 'login-required' ,// 'check-sso'
