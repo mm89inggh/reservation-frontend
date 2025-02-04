@@ -7,7 +7,7 @@ import { Business } from '../../models/business.model';
   providedIn: 'root'
 })
 export class BusinessService {
-  private apiUrl = 'http://ec2-3-89-128-121.compute-1.amazonaws.com:8762/reservation-service/api/negocios';
+  private apiUrl = 'http://ec2-3-87-210-143.compute-1.amazonaws.com:8762/reservation-service/api/negocios';
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) {}

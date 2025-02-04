@@ -5,7 +5,7 @@ import { Notification } from '../../models/notification.model';
 
 @Injectable()
 export class NotificationService {
-  private apiUrl = 'http://ec2-3-89-128-121.compute-1.amazonaws.com:8762/notification-service/api/notificaciones';
+  private apiUrl = 'http://ec2-3-87-210-143.compute-1.amazonaws.com:8762/notification-service/api/notificaciones';
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) {}

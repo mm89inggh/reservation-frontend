@@ -5,7 +5,7 @@ import { Transaction } from '../../models/transaction.model';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  private apiUrl = 'http://ec2-3-89-128-121.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
+  private apiUrl = 'http://ec2-3-87-210-143.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) {}
