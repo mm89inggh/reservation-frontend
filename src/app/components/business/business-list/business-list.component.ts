@@ -4,18 +4,38 @@ import { BusinessService } from '../../../services/business/business.service';
 import { Business } from '../../../models/business.model';
 import { Router } from '@angular/router';
 
+// PrimeNG Modules
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-business-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    CardModule,
+    ConfirmDialogModule,
+    ToastModule
+  ],
   templateUrl: './business-list.component.html',
   styleUrls: ['./business-list.component.css'],
+  providers: [MessageService, ConfirmationService] // Añadir servicios de PrimeNG
 })
 export class BusinessListComponent implements OnInit {
   negocios: Business[] = [];
 
-  constructor(private businessService: BusinessService, private router: Router) {}
+  constructor(
+    private businessService: BusinessService,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadAllBusinesses();
@@ -37,36 +57,38 @@ export class BusinessListComponent implements OnInit {
 
   /**
    * Navega a la vista de información de un negocio.
-   * @param id_negocio ID del negocio
    */
   verNegocio(id_negocio: number): void {
     this.router.navigate(['/business-info', id_negocio]);
   }
 
   /**
-   * Elimina un negocio por su ID.
-   * @param id_negocio ID del negocio a eliminar
+   * Confirma y elimina un negocio.
    */
   eliminarNegocio(id_negocio: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este negocio?')) {
-      this.businessService.deleteBusiness(id_negocio).subscribe(
-        () => {
-          alert('Negocio eliminado correctamente');
-          this.loadAllBusinesses(); // Recargar la lista de negocios
-        },
-        (error) => {
-          console.error('Error al eliminar el negocio:', error);
-          alert('Error al eliminar el negocio');
-        }
-      );
-    }
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que deseas eliminar este negocio?',
+      header: 'Confirmar Eliminación',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.businessService.deleteBusiness(id_negocio).subscribe(
+          () => {
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Negocio eliminado correctamente' });
+            this.loadAllBusinesses();
+          },
+          (error) => {
+            console.error('Error al eliminar el negocio:', error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el negocio' });
+          }
+        );
+      }
+    });
   }
 
-
-   /**
+  /**
    * Navega a la vista de creación de un nuevo negocio.
    */
-   crearNegocio(): void {
+  crearNegocio(): void {
     this.router.navigate(['/business-create']);
   }
 }

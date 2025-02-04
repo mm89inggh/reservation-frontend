@@ -1,26 +1,44 @@
 <div class="business-create">
-    <h2>Crear Nuevo Negocio</h2>
-    <form (ngSubmit)="crearNegocio()">
-      <div class="form-group">
+  <h2><i class="pi pi-building"></i> Crear Nuevo Negocio</h2>
+
+  <p-card>
+    <form [formGroup]="businessForm" (ngSubmit)="crearNegocio()">
+      <div class="p-fluid form-group">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" [(ngModel)]="nuevoNegocio.nombre" name="nombre" required>
+        <p-inputText id="nombre" formControlName="nombre" placeholder="Ingrese el nombre"></p-inputText>
+        <small *ngIf="businessForm.controls['nombre'].invalid && businessForm.controls['nombre'].touched" class="error">
+          Nombre es obligatorio (mín. 3 caracteres).
+        </small>
       </div>
-  
-      <div class="form-group">
+
+      <div class="p-fluid form-group">
         <label for="direccion">Dirección:</label>
-        <textarea id="direccion" [(ngModel)]="nuevoNegocio.direccion" name="direccion" required></textarea>
+        <p-inputText id="direccion" formControlName="direccion" placeholder="Ingrese la dirección"></p-inputText>
+        <small *ngIf="businessForm.controls['direccion'].invalid && businessForm.controls['direccion'].touched" class="error">
+          Dirección es obligatoria.
+        </small>
       </div>
-  
-      <div class="form-group">
+
+      <div class="p-fluid form-group">
         <label for="contacto">Contacto:</label>
-        <input type="text" id="contacto" [(ngModel)]="nuevoNegocio.contacto" name="contacto" required>
+        <p-inputMask id="contacto" formControlName="contacto" mask="(999) 999-9999" placeholder="(123) 456-7890"></p-inputMask>
+        <small *ngIf="businessForm.controls['contacto'].invalid && businessForm.controls['contacto'].touched" class="error">
+          Formato inválido (ej: (123) 456-7890).
+        </small>
       </div>
-  
-      <div class="form-group">
+
+      <div class="p-fluid form-group">
         <label for="coordenadas">Coordenadas:</label>
-        <input type="text" id="coordenadas" [(ngModel)]="nuevoNegocio.coordenadas" name="coordenadas">
+        <p-inputText id="coordenadas" formControlName="coordenadas" placeholder="Ej: 40.7128, -74.0060"></p-inputText>
       </div>
-  
-      <button type="submit">Crear Negocio</button>
+
+      <div class="buttons">
+        <p-button type="submit" label="Crear Negocio" icon="pi pi-check" class="p-button-success"></p-button>
+        <p-button type="button" label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="router.navigate(['/business-list'])"></p-button>
+      </div>
     </form>
-  </div>
+  </p-card>
+
+  <!-- Mensajes de Éxito/Error -->
+  <p-toast></p-toast>
+</div>

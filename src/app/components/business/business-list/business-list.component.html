@@ -1,8 +1,13 @@
 <div class="business-list">
-    <h2>Lista de Negocios</h2>
-    <button (click)="crearNegocio()">Crear Nuevo Negocio</button>
-    <table>
-      <thead>
+  <h2><i class="pi pi-building"></i> Lista de Negocios</h2>
+
+  <div class="action-bar">
+    <p-button label="Crear Nuevo Negocio" icon="pi pi-plus" class="p-button-primary" (click)="crearNegocio()"></p-button>
+  </div>
+
+  <p-card>
+    <p-table [value]="negocios" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
         <tr>
           <th>ID</th>
           <th>Nombre</th>
@@ -11,19 +16,24 @@
           <th>Coordenadas</th>
           <th>Acciones</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let negocio of negocios">
+      </ng-template>
+
+      <ng-template pTemplate="body" let-negocio>
+        <tr>
           <td>{{ negocio.id_negocio }}</td>
           <td>{{ negocio.nombre }}</td>
           <td>{{ negocio.direccion }}</td>
           <td>{{ negocio.contacto }}</td>
           <td>{{ negocio.coordenadas }}</td>
-          <td>
-            <button (click)="verNegocio(negocio.id_negocio)">Ver</button>
-            <button (click)="eliminarNegocio(negocio.id_negocio)">Eliminar</button>
+          <td class="action-buttons">
+            <p-button icon="pi pi-eye" class="p-button-rounded p-button-info" (click)="verNegocio(negocio.id_negocio)" title="Ver"></p-button>
+            <p-button icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="eliminarNegocio(negocio.id_negocio)" title="Eliminar"></p-button>
           </td>
         </tr>
-      </tbody>
-    </table>
-  </div>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+</div>

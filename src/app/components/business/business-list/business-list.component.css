@@ -1,0 +1,92 @@
+/* Contenedor principal */
+.business-list {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  /* Estilo para el título */
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #007bff;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  h2 i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+    color: #007bff;
+  }
+  
+  /* Barra de acciones */
+  .action-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+  
+  /* Tabla de PrimeNG */
+  .p-table {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo de los botones de acción */
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+  
+  /* Botón de Crear Nuevo */
+  .p-button-primary {
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    font-weight: bold;
+    padding: 10px 15px;
+  }
+  
+  .p-button-primary:hover {
+    background-color: #0056b3 !important;
+  }
+  
+  /* Botón de Ver */
+  .p-button-info {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+  }
+  
+  .p-button-info:hover {
+    background-color: #117a8b !important;
+  }
+  
+  /* Botón de Eliminar */
+  .p-button-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+  }
+  
+  .p-button-danger:hover {
+    background-color: #c82333 !important;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .business-list {
+      padding: 1rem;
+      width: 95%;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+  

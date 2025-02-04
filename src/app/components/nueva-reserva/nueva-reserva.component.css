@@ -1,148 +1,31 @@
-/************************************************************/
-/* CONTENEDOR PRINCIPAL */
 .nueva-reserva {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* TÍTULO PRINCIPAL */
-.nueva-reserva h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/************************************************************/
-/* MENÚ DESPLEGABLE DE NEGOCIOS */
-.business-dropdown-container {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.business-dropdown-container label {
-    font-weight: 600;
-    margin-right: 10px;
-    color: #007bff;
-}
-
-.business-dropdown-container select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 250px;
-    text-align: center;
-}
-
-/************************************************************/
-/* ESTADO VACÍO CUANDO NO HAY FORMULARIO */
-.empty-state {
-    text-align: center;
-    color: #555;
-    margin-top: 30px;
-}
-
-.empty-state img {
-    max-width: 250px;
-    margin-top: 20px;
-    opacity: 0.7;
-}
-
-/************************************************************/
-/* MAPA Y FORMULARIO */
-.reservation-container {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-/* MAPA */
-.map-section {
-    flex: 1;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid #007bff;
-    transition: all 0.3s ease-in-out;
-}
-
-.map-section .map-canvas {
-    width: 100%;
-    height: 420px;
-    border-radius: 10px;
-}
-
-/************************************************************/
-/* FORMULARIO */
-.reservation-form {
-    flex: 1;
-    background: #f1f9ff;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #007bff;
-    transition: all 0.3s ease-in-out;
-}
-
-.reservation-form h3 {
-    text-align: center;
-    color: #007bff;
-    margin-bottom: 20px;
-}
-
-.reservation-form .form-group {
+    max-width: 700px;
+    margin: auto;
+  }
+  
+  .p-field {
     margin-bottom: 15px;
-}
-
-.reservation-form label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: 600;
-}
-
-.reservation-form input,
-.reservation-form select {
+  }
+  
+  .reservation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .map-section {
+    height: 300px;
+  }
+  
+  .map-canvas {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-/* BOTÓN DE ENVÍO */
-.btn {
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
-}
-
-.submit-btn {
-    background-color: #28a745;
-    color: #fff;
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.submit-btn:hover {
-    background-color: #218838;
-    opacity: 0.9;
-}
-
-/************************************************************/
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .reservation-container {
-        flex-direction: column;
+    height: 100%;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nueva-reserva {
+      width: 90%;
     }
-
-    .map-section .map-canvas {
-        height: 300px;
-    }
-}
+  }
+  

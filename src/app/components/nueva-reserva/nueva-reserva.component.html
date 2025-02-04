@@ -1,64 +1,43 @@
 <div class="nueva-reserva">
-    <h2>Nueva Reserva</h2>
-
-    <!-- MENÚ DESPLEGABLE DE NEGOCIOS -->
-    <div class="business-dropdown-container">
+    <p-panel header="Nueva Reserva">
+      <div class="p-field">
         <label for="businessSelect">Seleccione un negocio:</label>
-        <select id="businessSelect" #businessSelect (change)="onBusinessSelect(businessSelect.value)">
-            <option value="">Seleccione un negocio</option>
-            <option *ngFor="let business of businesses" [value]="business.id_negocio">
-                {{ business.nombre }} - {{ business.direccion }}
-            </option>
-        </select>
-    </div>
-
-    <!-- Estado cuando no hay negocio seleccionado -->
-    <div *ngIf="!selectedBusiness" class="empty-state">
-        <p>Selecciona un negocio para ver su ubicación y realizar una reserva.</p>
-        <img src="assets/map-placeholder.svg" alt="Mapa de referencia">
-    </div>
-
-    <!-- Contenedor del mapa y formulario -->
-    <div *ngIf="selectedBusiness" class="reservation-container">
-        <!-- MAPA -->
+        <p-dropdown id="businessSelect" [options]="businesses" optionLabel="nombre" optionValue="id_negocio" 
+                    (onChange)="onBusinessSelect($event)" placeholder="Seleccione un negocio"></p-dropdown>
+      </div>
+      
+      <div *ngIf="selectedBusiness" class="reservation-container">
         <div class="map-section">
-            <google-map class="map-canvas" [center]="center" [zoom]="zoom">
-                <map-marker
-                    [position]="parseCoordinates(selectedBusiness.coordenadas)">
-                </map-marker>
-            </google-map>
+          <google-map class="map-canvas" [center]="center" [zoom]="zoom">
+            <map-marker [position]="parseCoordinates(selectedBusiness.coordenadas)"></map-marker>
+          </google-map>
         </div>
-
-        <!-- FORMULARIO DE RESERVA -->
+  
         <div class="reservation-form">
-            <h3>Reserva en: {{ selectedBusiness.nombre }}</h3>
-            <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-                <input type="hidden" formControlName="businessId">
-
-                <div class="form-group">
-                    <label for="date">Fecha:</label>
-                    <input type="date" id="date" formControlName="date">
-                </div>
-
-                <div class="form-group">
-                    <label for="time">Hora:</label>
-                    <input type="time" id="time" formControlName="time">
-                </div>
-
-                <div class="form-group">
-                    <label for="serviceId">Servicio:</label>
-                    <select id="serviceId" formControlName="serviceId">
-                        <option value="">Seleccione un servicio</option>
-                        <option *ngFor="let service of services" [value]="service.id_servicio">
-                            {{ service.nombre }}
-                        </option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn submit-btn" [disabled]="reservationForm.invalid">
-                    Crear Reserva
-                </button>
-            </form>
+          <h3>Reserva en: {{ selectedBusiness.nombre }}</h3>
+          <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+            <div class="p-field">
+              <label for="date">Fecha:</label>
+              <p-calendar id="date" formControlName="date" dateFormat="yy-mm-dd" showIcon></p-calendar>
+            </div>
+  
+            <div class="p-field">
+              <label for="time">Hora:</label>
+              <p-calendar id="time" formControlName="time" timeOnly showIcon></p-calendar>
+            </div>
+  
+            <div class="p-field">
+              <label for="serviceId">Servicio:</label>
+              <p-dropdown id="serviceId" [options]="services" optionLabel="nombre" optionValue="id_servicio"
+                          formControlName="serviceId" placeholder="Seleccione un servicio"></p-dropdown>
+            </div>
+  
+            <p-button type="submit" label="Crear Reserva" icon="pi pi-check" class="p-button-success"></p-button>
+          </form>
         </div>
-    </div>
-</div>
+      </div>
+    </p-panel>
+  
+    <p-toast position="top-right"></p-toast>
+  </div>
+  

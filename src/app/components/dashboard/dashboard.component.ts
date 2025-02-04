@@ -7,13 +7,30 @@ import { FormsModule } from '@angular/forms';
 import { Reservation } from '../../models/reservation.model';
 import { Business } from '../../models/business.model';
 
+// PrimeNG
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    PanelModule,
+    ButtonModule,
+    CardModule,
+    TableModule,
+    ToastModule
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  providers: [ReservationService, BusinessService]
+  providers: [ReservationService, BusinessService, MessageService]
 })
 export class DashboardComponent implements OnInit {
   reservas: Reservation[] = [];
@@ -21,7 +38,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private reservationService: ReservationService,
-    private businessService: BusinessService
+    private businessService: BusinessService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +57,7 @@ export class DashboardComponent implements OnInit {
       },
       (error) => {
         console.error("Error cargando reservas:", error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar las reservas' });
         this.reservas = [];
       }
     );
@@ -55,11 +74,12 @@ export class DashboardComponent implements OnInit {
       },
       (error) => {
         console.error("Error cargando información del negocio:", error);
+        this.messageService.add({ severity: 'warn', summary: 'Aviso', detail: 'No se pudo cargar la información del negocio' });
         this.negocio = this.getDefaultBusiness();
       }
     );
   }
-  
+
   /**
    * Devuelve un objeto de negocio por defecto en caso de error.
    */
@@ -72,5 +92,20 @@ export class DashboardComponent implements OnInit {
       coordenadas: "0,0"
     };
   }
-  
+
+  /**
+   * Devuelve la clase CSS para el estado de la reserva.
+   */
+  getEstadoClase(estado: string): string {
+    switch (estado.toLowerCase()) {
+      case 'pendiente':
+        return 'estado-pendiente';
+      case 'confirmada':
+        return 'estado-confirmada';
+      case 'cancelada':
+        return 'estado-cancelada';
+      default:
+        return 'estado-desconocido';
+    }
+  }
 }

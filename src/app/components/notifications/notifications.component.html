@@ -1,9 +1,31 @@
-<div class="notifications">
-  <h2>Notificaciones</h2>
-  <ul>
-    <li *ngFor="let noti of notificaciones" [class.leida]="noti.leido">
-      <p>{{ noti.mensaje }}</p>
-      <small>{{ noti.fechaCreacion | date:'short' }}</small>
-    </li>
-  </ul>
+<div class="notifications-container">
+  <p-card>
+    <ng-template pTemplate="header">
+      <h2><i class="pi pi-bell"></i> Notificaciones</h2>
+    </ng-template>
+
+    <div *ngIf="notificaciones.length > 0; else noNotificaciones">
+      <p-listbox [options]="notificaciones" optionLabel="mensaje">
+        <ng-template let-noti pTemplate="item">
+          <div class="noti-item" [ngClass]="{'leida': noti.leido}">
+            <p class="mensaje">{{ noti.mensaje }}</p>
+            <small class="fecha">{{ noti.fechaCreacion | date: 'short' }}</small>
+            <p-button 
+              *ngIf="!noti.leido" 
+              label="Marcar como leída" 
+              icon="pi pi-check" 
+              class="p-button-success p-button-sm" 
+              (click)="marcarComoLeida(noti)">
+            </p-button>
+          </div>
+        </ng-template>
+      </p-listbox>
+    </div>
+
+    <ng-template #noNotificaciones>
+      <p>No tienes notificaciones nuevas.</p>
+    </ng-template>
+  </p-card>
+
+  <p-toast position="top-right"></p-toast>
 </div>

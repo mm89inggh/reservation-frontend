@@ -11,6 +11,15 @@ import { ServiceService } from '../../services/service/service.service';
 import { Service } from '../../models/Service-manager.model';
 import { Reservation } from '../../models/reservation.model';
 
+// PrimeNG
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { PanelModule } from 'primeng/panel';
+
 @Component({
   selector: 'app-nueva-reserva',
   styleUrls: ['./nueva-reserva.component.css'],
@@ -21,29 +30,31 @@ import { Reservation } from '../../models/reservation.model';
     ReactiveFormsModule,
     FormsModule,
     GoogleMap,
-    MapMarker
+    MapMarker,
+    DropdownModule,
+    CalendarModule,
+    ButtonModule,
+    CardModule,
+    ToastModule,
+    PanelModule
   ],
-  providers: [ReservationService, ServiceService, BusinessService],
+  providers: [ReservationService, ServiceService, BusinessService, MessageService],
   templateUrl: './nueva-reserva.component.html'
 })
 export class NuevaReservaComponent implements OnInit {
-  /** Listado completo de negocios. */
   businesses: Business[] = [];
-  /** Negocio seleccionado. */
   selectedBusiness: Business | null = null;
-  /** Listado de servicios disponibles. */
   services: Service[] = [];
-  /** Formulario de creación de reserva. */
   reservationForm: FormGroup;
-  /** Ajustes iniciales del mapa. */
   zoom = 12;
-  center: google.maps.LatLngLiteral = { lat: 40.416775, lng: -3.70379 }; // Centro en Madrid por defecto
+  center: google.maps.LatLngLiteral = { lat: 40.416775, lng: -3.70379 };
 
   constructor(
     private businessService: BusinessService,
     private serviceService: ServiceService,
     private fb: FormBuilder,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private messageService: MessageService
   ) {
     this.reservationForm = this.fb.group({
       businessId: ['', Validators.required],
@@ -54,7 +65,6 @@ export class NuevaReservaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Cargar lista de negocios
     this.businessService.getAllBusinesses().pipe(take(1)).subscribe({
       next: (businesses) => {
         this.businesses = businesses;
@@ -62,77 +72,53 @@ export class NuevaReservaComponent implements OnInit {
       error: (err) => console.error('Error al obtener negocios:', err)
     });
 
-    // Cargar lista de servicios
     this.serviceService.getAllServices().pipe(take(1)).subscribe({
       next: (services) => this.services = services,
       error: (err) => console.error('Error al obtener servicios:', err)
     });
   }
 
-  /**
-   * Maneja la selección de negocio desde el menú desplegable.
-   * Busca el negocio seleccionado por ID y actualiza el formulario y el mapa.
-   */
-  onBusinessSelect(businessIdStr: string): void {
-    if (!businessIdStr) {
-      this.selectedBusiness = null;
-      return;
-    }
-    const businessId = +businessIdStr;
+  onBusinessSelect(event: any): void {
+    const businessId = event.value;
     const business = this.businesses.find(b => b.id_negocio === businessId);
     if (business) {
       this.selectBusiness(business);
     }
   }
 
-  /**
-   * Selecciona el negocio, centra el mapa y actualiza el formulario.
-   */
   selectBusiness(business: Business): void {
     this.selectedBusiness = business;
     this.center = this.parseCoordinates(business.coordenadas);
     this.reservationForm.patchValue({ businessId: business.id_negocio });
   }
 
-  /**
-   * Convierte una cadena de coordenadas "lat,lng" en un objeto LatLngLiteral.
-   */
   parseCoordinates(coords: string): google.maps.LatLngLiteral {
-    if (!coords) {
-      console.warn('Coordenadas no proporcionadas, usando valores predeterminados (Madrid).');
-      return { lat: 40.416775, lng: -3.70379 };
-    }
+    if (!coords) return { lat: 40.416775, lng: -3.70379 };
     const parts = coords.split(',').map(coord => parseFloat(coord.trim()));
-    return parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1]) ? 
-      { lat: parts[0], lng: parts[1] } : { lat: 40.416775, lng: -3.70379 };
+    return parts.length === 2 ? { lat: parts[0], lng: parts[1] } : { lat: 40.416775, lng: -3.70379 };
   }
 
-  /**
-   * Envía el formulario y crea una nueva reserva a través del servicio.
-   */
   onSubmit(): void {
     if (this.reservationForm.valid) {
       const newReservation: Omit<Reservation, 'id_reserva' | 'created_at' | 'updated_at'> = {
         fecha: this.reservationForm.value.date,
         hora: this.reservationForm.value.time,
         estado: "pendiente",
-        id_usuario: 3, // Se debería obtener dinámicamente
+        id_usuario: 3,
         id_negocio: this.reservationForm.value.businessId,
         id_servicio: this.reservationForm.value.serviceId
       };
   
       this.reservationService.createReservation(newReservation).pipe(take(1)).subscribe({
-        next: (created) => {
-          console.log('Nueva Reserva creada:', created);
-          alert('Reserva creada exitosamente');
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Reserva creada', detail: 'Tu reserva se ha realizado con éxito' });
           this.reservationForm.reset();
           this.selectedBusiness = null;
         },
-        error: (err) => console.error('Error al crear la reserva:', err)
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo crear la reserva' });
+        }
       });
-    } else {
-      console.warn('El formulario no es válido.');
     }
   }
-  
 }

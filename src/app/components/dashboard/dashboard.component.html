@@ -1,31 +1,50 @@
 <div class="dashboard">
-  <div class="dashboard-header">
-    <h2>Bienvenido, {{ negocio?.nombre || 'Propietario' }}</h2>
-    <nav class="dashboard-nav">
-      <a routerLink="/services-management">Servicios</a>
-      <a routerLink="/notifications">Notificaciones</a>
-      <a routerLink="/business-info">Mi Negocio</a>
-      <a routerLink="/transactions">Transacciones</a>
-    </nav>
-  </div>
+  <p-panel header="Bienvenido, {{ negocio?.nombre || 'Propietario' }}">
+    <div class="dashboard-nav">
+      <p-button label="Servicios" icon="pi pi-briefcase" routerLink="/services-management" class="p-button-text"></p-button>
+      <p-button label="Notificaciones" icon="pi pi-bell" routerLink="/notifications" class="p-button-text"></p-button>
+      <p-button label="Mi Negocio" icon="pi pi-building" routerLink="/business-info" class="p-button-text"></p-button>
+      <p-button label="Transacciones" icon="pi pi-credit-card" routerLink="/transactions" class="p-button-text"></p-button>
+    </div>
+  </p-panel>
 
   <section class="resumen-reservas">
-    <h3>Próximas Reservas</h3>
-    <ul *ngIf="reservas.length > 0; else noReservas">
-      <li *ngFor="let reserva of reservas">
-        <div class="reserva-item">
-          <span class="reserva-date">{{ reserva.fecha }}</span>
-          <span class="reserva-time">{{ reserva.hora }}</span>
-          <span class="reserva-status">{{ reserva.estado }}</span>
-        </div>
-      </li>
-    </ul>
-    <ng-template #noReservas>
-      <p>No hay reservas próximas.</p>
-    </ng-template>
+    <p-card>
+      <ng-template pTemplate="header">
+        <h3>Próximas Reservas</h3>
+      </ng-template>
+
+      <p-table [value]="reservas" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Estado</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-reserva>
+          <tr>
+            <td>{{ reserva.fecha }}</td>
+            <td>{{ reserva.hora }}</td>
+            <td>
+              <span class="reserva-status" [ngClass]="getEstadoClase(reserva.estado)">
+                {{ reserva.estado }}
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <ng-template #noReservas>
+        <p>No hay reservas próximas.</p>
+      </ng-template>
+    </p-card>
   </section>
 
   <section class="dashboard-footer">
     <p>Consulta el panel de administración para más detalles.</p>
   </section>
+
+  <p-toast position="top-right"></p-toast>
 </div>
