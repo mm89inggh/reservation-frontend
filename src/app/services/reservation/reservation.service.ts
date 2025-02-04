@@ -3,75 +3,78 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reservation } from '../../models/reservation.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ReservationService {
-  private apiUrl = 'http://ec2-18-205-162-176.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
+  private apiUrl = 'http://ec2-3-89-128-121.compute-1.amazonaws.com:8762/reservation-service/api/reservas';
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) {}
 
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
   /**
-   * Obtiene todas las reservas enviando una solicitud POST con targetMethod "GET".
+   * Obtiene todas las reservas.
+   * @returns Observable con la lista de reservas.
    */
-  getReservations(): Observable<any> {
-    const body = {
-      targetMethod: "GET"
-    };
-    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+  getAllReservations(): Observable<Reservation[]> {
+    const body = { targetMethod: "GET" };
+    return this.http.post<Reservation[]>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
-   * Cancela una reserva enviando una solicitud POST con targetMethod "CANCEL".
+   * Obtiene una reserva por su ID.
+   * @param reservaId ID de la reserva a obtener.
+   * @returns Observable con la información de la reserva.
    */
-  cancelReservation(id: number): Observable<any> {
-    const body = {
-      targetMethod: "POST",
-      body: { reservaId: id }
-    };
-    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
-  }
-
-  /**
-   * Obtiene una reserva por su ID enviando una solicitud POST con targetMethod "GET_BY_ID".
-   */
-  getReservationById(id: number): Observable<any> {
+  getReservationById(reservaId: number): Observable<Reservation> {
     const body = {
       targetMethod: "GET",
-      body: { reservaId: id }
+      body: { reservaId }
     };
-    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    return this.http.post<Reservation>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
-   * Actualiza el estado de una reserva enviando una solicitud POST con targetMethod "UPDATE_STATUS".
+   * Crea una nueva reserva.
+   * @param newReservation Datos de la nueva reserva.
+   * @returns Observable con la respuesta del backend.
    */
-  updateReservationStatus(id: number, nuevoEstado: string): Observable<any> {
+  createReservation(newReservation: Omit<Reservation, 'id_reserva' | 'created_at' | 'updated_at'>): Observable<Reservation> {
+    const body = {
+      targetMethod: "POST",
+      body: newReservation
+    };
+    return this.http.post<Reservation>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+  }
+  
+
+  /**
+   * Actualiza una reserva existente.
+   * @param reservaId ID de la reserva a actualizar.
+   * @param updatedInfo Datos actualizados de la reserva.
+   * @returns Observable con la respuesta del backend.
+   */
+  updateReservation(reservaId: number, updatedInfo: Partial<Reservation>): Observable<Reservation> {
     const body = {
       targetMethod: "UPDATE",
       body: {
-        reservaId: id,
-        estado: nuevoEstado
+        reservaId,
+        ...updatedInfo
       }
     };
-    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    return this.http.post<Reservation>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
-   * Crea una nueva reserva enviando una solicitud POST con targetMethod "CREATE".
+   * Elimina una reserva por su ID.
+   * @param reservaId ID de la reserva a eliminar.
+   * @returns Observable con la respuesta del backend.
    */
-  createReservation(newReservation: { businessId: number; date: string; time: string; serviceId: number }): Observable<any> {
+  deleteReservation(reservaId: number): Observable<void> {
     const body = {
-      targetMethod: "POST",
-      body: {
-        fecha: newReservation.date,
-        hora: newReservation.time,
-        estado: "pendiente",
-        id_usuario: 3, // Este valor debe ajustarse dinámicamente según la lógica del usuario
-        id_negocio: newReservation.businessId,
-        id_servicio: newReservation.serviceId
-      }
+      targetMethod: "DELETE",
+      body: { reservaId }
     };
-    return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    return this.http.post<void>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 }

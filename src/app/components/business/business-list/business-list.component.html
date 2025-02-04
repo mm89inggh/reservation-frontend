@@ -1,0 +1,29 @@
+<div class="business-list">
+    <h2>Lista de Negocios</h2>
+    <button (click)="crearNegocio()">Crear Nuevo Negocio</button>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Dirección</th>
+          <th>Contacto</th>
+          <th>Coordenadas</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let negocio of negocios">
+          <td>{{ negocio.id_negocio }}</td>
+          <td>{{ negocio.nombre }}</td>
+          <td>{{ negocio.direccion }}</td>
+          <td>{{ negocio.contacto }}</td>
+          <td>{{ negocio.coordenadas }}</td>
+          <td>
+            <button (click)="verNegocio(negocio.id_negocio)">Ver</button>
+            <button (click)="eliminarNegocio(negocio.id_negocio)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

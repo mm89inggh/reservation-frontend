@@ -1,0 +1,65 @@
+/* Contenedor principal */
+.transaction-info {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Tarjeta del formulario */
+  .form-container {
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  /* Campos de formulario */
+  .p-field {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  /* Etiquetas */
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Botones */
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .p-button {
+    width: 48%;
+  }
+  
+  /* Estilo de botones */
+  .p-button-success {
+    background: #28a745;
+    border: none;
+  }
+  
+  .p-button-success:hover {
+    background: #218838;
+  }
+  
+  .p-button-secondary {
+    background: #6c757d;
+    border: none;
+  }
+  
+  .p-button-secondary:hover {
+    background: #5a6268;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .transaction-info {
+      width: 90%;
+    }
+  }
+  

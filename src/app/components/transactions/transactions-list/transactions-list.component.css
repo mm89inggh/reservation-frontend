@@ -1,0 +1,74 @@
+/* Contenedor principal */
+.transaction-list {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Barra de herramientas */
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+  }
+  
+  /* Tabla */
+  .p-datatable {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .p-datatable th {
+    background: #007bff;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+  }
+  
+  .p-datatable tbody tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  
+  .p-datatable tbody tr:hover {
+    background: #e3f2fd;
+    transition: 0.3s ease-in-out;
+  }
+  
+  /* Estados */
+  .estado-pendiente {
+    color: #ff9800;
+    font-weight: bold;
+  }
+  
+  .estado-completado {
+    color: #4caf50;
+    font-weight: bold;
+  }
+  
+  .estado-cancelado {
+    color: #f44336;
+    font-weight: bold;
+  }
+  
+  /* Botones */
+  .p-button {
+    margin: 5px;
+  }
+  
+  .p-button-rounded {
+    border-radius: 50%;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .transaction-list {
+      width: 95%;
+    }
+  }
+  

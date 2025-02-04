@@ -1,0 +1,46 @@
+<div class="service-info">
+    <h2><i class="pi pi-cog"></i> Información del Servicio</h2>
+  
+    <p-card class="form-container">
+      <ng-template pTemplate="content">
+        <form [formGroup]="serviceForm" (ngSubmit)="guardarCambios()">
+          <!-- Nombre del Servicio -->
+          <div class="p-field">
+            <label for="nombre">Nombre:</label>
+            <p-inputText id="nombre" formControlName="nombre" placeholder="Ingrese el nombre del servicio"></p-inputText>
+          </div>
+  
+          <!-- Descripción -->
+          <div class="p-field">
+            <label for="descripcion">Descripción:</label>
+            <p-inputTextarea id="descripcion" formControlName="descripcion" rows="3" autoResize="true" placeholder="Descripción del servicio"></p-inputTextarea>
+          </div>
+  
+          <!-- Duración -->
+          <div class="p-field">
+            <label for="duracion">Duración (minutos):</label>
+            <p-inputNumber id="duracion" formControlName="duracion" [min]="1"></p-inputNumber>
+          </div>
+  
+          <!-- Precio -->
+          <div class="p-field">
+            <label for="precio">Precio ($):</label>
+            <p-inputNumber id="precio" formControlName="precio" mode="currency" currency="USD"></p-inputNumber>
+          </div>
+  
+          <!-- ID Negocio (solo lectura) -->
+          <div class="p-field">
+            <label for="id_negocio">ID Negocio:</label>
+            <p-inputNumber id="id_negocio" formControlName="id_negocio" [disabled]="true"></p-inputNumber>
+          </div>
+  
+          <!-- Botones -->
+          <div class="form-buttons">
+            <button pButton type="submit" label="Guardar Cambios" icon="pi pi-check" class="p-button-success" [disabled]="serviceForm.invalid"></button>
+            <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="cancelar()"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-card>
+  </div>
+  

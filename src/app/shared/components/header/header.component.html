@@ -1,14 +1,17 @@
-<!-- Ejemplo en src/app/components/header/header.component.html -->
+<!-- src/app/components/header/header.component.html -->
 <header class="app-header">
   <div class="container">
-    <h1>Sistema de Reservas</h1>
-    <nav>
-      <a routerLink="/dashboard">Dashboard</a>
-      <a routerLink="/reservations">Reservas</a>
-      <a routerLink="/nueva-reserva">Nueva Reserva</a>
-      <a routerLink="/notifications">Notificaciones</a>
-      <a routerLink="/business-info">Negocio</a>
-      <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
-    </nav>
+    <!-- Logo o Nombre -->
+    <h1><i class="pi pi-calendar"></i> Sistema de Reservas</h1>
+
+    <!-- Menú de Navegación -->
+    <p-menubar [model]="menuItems" class="menu-bar">
+      <ng-template pTemplate="start">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+      </ng-template>
+      <ng-template pTemplate="end">
+        <button pButton label="Cerrar Sesión" icon="pi pi-sign-out" class="p-button-danger" (click)="logout()"></button>
+      </ng-template>
+    </p-menubar>
   </div>
 </header>

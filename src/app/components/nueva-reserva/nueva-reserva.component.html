@@ -12,7 +12,7 @@
         </select>
     </div>
 
-    <!-- Sección para cuando no hay negocio seleccionado -->
+    <!-- Estado cuando no hay negocio seleccionado -->
     <div *ngIf="!selectedBusiness" class="empty-state">
         <p>Selecciona un negocio para ver su ubicación y realizar una reserva.</p>
         <img src="assets/map-placeholder.svg" alt="Mapa de referencia">
@@ -24,8 +24,7 @@
         <div class="map-section">
             <google-map class="map-canvas" [center]="center" [zoom]="zoom">
                 <map-marker
-                    [position]="parseCoordinates(selectedBusiness.coordenadas)"
-                    (mapClick)="onMarkerClick(selectedBusiness)">
+                    [position]="parseCoordinates(selectedBusiness.coordenadas)">
                 </map-marker>
             </google-map>
         </div>

@@ -1,25 +1,28 @@
 <div class="reservations">
-  <h2>Gestión de Reservas</h2>
-  <table>
-    <thead>
+  <h2><i class="pi pi-calendar"></i> Gestión de Reservas</h2>
+
+  <!-- Tabla de Reservas con PrimeNG -->
+  <p-table [value]="reservas" responsiveLayout="scroll" [paginator]="true" [rows]="5">
+    <ng-template pTemplate="header">
       <tr>
         <th>Fecha</th>
         <th>Hora</th>
         <th>Estado</th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let reserva of reservas">
+    </ng-template>
+    <ng-template pTemplate="body" let-reserva>
+      <tr>
         <td>{{ reserva.fecha }}</td>
         <td>{{ reserva.hora }}</td>
-        <td>{{ reserva.estado }}</td>
         <td>
-          <button class="btn cancel-btn" (click)="cancelarReserva(reserva.id_reserva)">
-            Cancelar
-          </button>
+          <p-tag [value]="reserva.estado" [severity]="getEstadoColor(reserva.estado)"></p-tag>
+        </td>
+        <td>
+          <button pButton type="button" icon="pi pi-eye" class="p-button-text p-button-info" (click)="verReserva(reserva.id_reserva)" title="Ver Detalles"></button>
+          <button pButton type="button" icon="pi pi-times" class="p-button-text p-button-danger" (click)="cancelarReserva(reserva.id_reserva)" title="Cancelar"></button>
         </td>
       </tr>
-    </tbody>
-  </table>
+    </ng-template>
+  </p-table>
 </div>

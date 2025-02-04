@@ -4,6 +4,8 @@ import { ReservationService } from '../../services/reservation/reservation.servi
 import { BusinessService } from '../../services/business/business.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Reservation } from '../../models/reservation.model';
+import { Business } from '../../models/business.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,8 +16,8 @@ import { FormsModule } from '@angular/forms';
   providers: [ReservationService, BusinessService]
 })
 export class DashboardComponent implements OnInit {
-  reservas: any[] = [];
-  negocio: any = null;
+  reservas: Reservation[] = [];
+  negocio: Business | null = null;
 
   constructor(
     private reservationService: ReservationService,
@@ -31,16 +33,15 @@ export class DashboardComponent implements OnInit {
    * Carga la lista de reservas desde el backend.
    */
   loadReservations(): void {
-    this.reservationService.getReservations().subscribe(response => {
-      if (response && response.body) {
-        this.reservas = response.body;
-      } else {
+    this.reservationService.getAllReservations().subscribe(
+      (response) => {
+        this.reservas = response ?? [];
+      },
+      (error) => {
+        console.error("Error cargando reservas:", error);
         this.reservas = [];
       }
-    }, error => {
-      console.error("Error cargando reservas:", error);
-      this.reservas = [];
-    });
+    );
   }
 
   /**
@@ -48,15 +49,28 @@ export class DashboardComponent implements OnInit {
    */
   loadBusinessInfo(): void {
     const idNegocio = 1; // Ajustar según el negocio en sesión
-    this.businessService.getBusinessInfo(idNegocio).subscribe(response => {
-      if (response && response.body) {
-        this.negocio = response.body;
-      } else {
-        this.negocio = { nombre: "Negocio no disponible" };
+    this.businessService.getBusinessById(idNegocio).subscribe(
+      (response) => {
+        this.negocio = response ?? this.getDefaultBusiness();
+      },
+      (error) => {
+        console.error("Error cargando información del negocio:", error);
+        this.negocio = this.getDefaultBusiness();
       }
-    }, error => {
-      console.error("Error cargando información del negocio:", error);
-      this.negocio = { nombre: "Negocio no disponible" };
-    });
+    );
   }
+  
+  /**
+   * Devuelve un objeto de negocio por defecto en caso de error.
+   */
+  private getDefaultBusiness(): Business {
+    return {
+      id_negocio: 0,
+      nombre: "Negocio no disponible",
+      direccion: "No disponible",
+      contacto: "No disponible",
+      coordenadas: "0,0"
+    };
+  }
+  
 }

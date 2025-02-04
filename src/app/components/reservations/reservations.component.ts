@@ -1,33 +1,86 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReservationService } from '../../services/reservation/reservation.service';
+import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { ReservationService } from '../../services/reservation/reservation.service';
+import { Reservation } from '../../models/reservation.model';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-reservations',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, TableModule, ButtonModule, TagModule],
   templateUrl: './reservations.component.html',
   styleUrls: ['./reservations.component.css'],
   providers: [ReservationService]
 })
 export class ReservationsComponent implements OnInit {
+  reservas: Reservation[] = [];
 
-  reservas: any[] = [];
-
-  constructor(private reservationService: ReservationService) { }
+  constructor(private reservationService: ReservationService, private router: Router) {}
 
   ngOnInit(): void {
-    this.reservationService.getReservations().subscribe(data => {
-      this.reservas = data;
-    });
+    this.loadReservations();
   }
 
-  cancelarReserva(id: number): void {
-    // Llamada al servicio para cancelar la reserva
-    this.reservationService.cancelReservation(id).subscribe(response => {
-      // Actualizar la lista o notificar al usuario
-      this.ngOnInit();
-    });
+  /**
+   * Carga todas las reservas desde el servicio.
+   */
+  loadReservations(): void {
+    this.reservationService.getAllReservations().subscribe(
+      (data) => {
+        this.reservas = data;
+      },
+      (error) => {
+        console.error('Error al obtener las reservas:', error);
+      }
+    );
   }
+
+  /**
+   * Cancela una reserva y recarga la lista de reservas.
+   * @param id_reserva ID de la reserva a cancelar.
+   */
+  cancelarReserva(id_reserva: number): void {
+    if (confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
+      this.reservationService.deleteReservation(id_reserva).subscribe(
+        () => {
+          alert('Reserva cancelada correctamente');
+          this.loadReservations(); // Recargar la lista de reservas
+        },
+        (error) => {
+          console.error('Error al cancelar la reserva:', error);
+          alert('Error al cancelar la reserva');
+        }
+      );
+    }
+  }
+
+  /**
+   * Redirige a la vista de información de la reserva seleccionada.
+   * @param id_reserva ID de la reserva
+   */
+  verReserva(id_reserva: number): void {
+    this.router.navigate(['/reservacion-info', id_reserva]);
+  }
+
+  /**
+   * Retorna el color del estado de la reserva en base a su valor.
+   * @param estado Estado de la reserva
+   */
+  getEstadoColor(estado: string): "success" | "secondary" | "info" | "warn" | "danger" | "contrast" | undefined {
+    switch (estado.toLowerCase()) {
+      case 'pendiente':
+        return 'warn'; // Amarillo para advertencia
+      case 'confirmada':
+        return 'success'; // Verde para éxito
+      case 'cancelada':
+        return 'danger'; // Rojo para cancelado
+      default:
+        return 'info'; // Azul para información general
+    }
+  }
+  
 }

@@ -1,0 +1,40 @@
+<div class="transaction-list">
+  <h2><i class="pi pi-list"></i> Lista de Transacciones</h2>
+
+  <div class="toolbar">
+    <button pButton label="Crear Nueva Transacción" icon="pi pi-plus" class="p-button-success" (click)="crearTransaccion()"></button>
+  </div>
+
+  <p-table [value]="transacciones" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Monto</th>
+        <th>Estado</th>
+        <th>Método de Pago</th>
+        <th>Fecha</th>
+        <th>ID Reserva</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-transaccion>
+      <tr>
+        <td>{{ transaccion.id_transaccion }}</td>
+        <td>{{ transaccion.monto | currency:'USD' }}</td>
+        <td>
+          <span [ngClass]="getEstadoClass(transaccion.estado)">
+            {{ transaccion.estado }}
+          </span>
+        </td>
+        <td>{{ transaccion.metodo_pago }}</td>
+        <td>{{ transaccion.fecha_transaccion | date:'shortDate' }}</td>
+        <td>{{ transaccion.id_reserva }}</td>
+        <td>
+          <button pButton icon="pi pi-eye" class="p-button-rounded p-button-info" (click)="verTransaccion(transaccion.id_transaccion)"></button>
+          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="eliminarTransaccion(transaccion.id_transaccion)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

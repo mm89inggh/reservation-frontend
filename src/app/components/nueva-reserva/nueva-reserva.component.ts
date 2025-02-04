@@ -6,9 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Business } from '../../models/business.model';
 import { take } from 'rxjs/operators';
-import {GoogleMap, MapMarker} from '@angular/google-maps';
-import { Service } from '../../models/Service-manager.model';
+import { GoogleMap, MapMarker } from '@angular/google-maps';
 import { ServiceService } from '../../services/service/service.service';
+import { Service } from '../../models/Service-manager.model';
+import { Reservation } from '../../models/reservation.model';
 
 @Component({
   selector: 'app-nueva-reserva',
@@ -53,7 +54,7 @@ export class NuevaReservaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // 1. Cargar lista de negocios
+    // Cargar lista de negocios
     this.businessService.getAllBusinesses().pipe(take(1)).subscribe({
       next: (businesses) => {
         this.businesses = businesses;
@@ -61,8 +62,8 @@ export class NuevaReservaComponent implements OnInit {
       error: (err) => console.error('Error al obtener negocios:', err)
     });
 
-    // 2. Cargar lista de servicios
-    this.serviceService.getServices().pipe(take(1)).subscribe({
+    // Cargar lista de servicios
+    this.serviceService.getAllServices().pipe(take(1)).subscribe({
       next: (services) => this.services = services,
       error: (err) => console.error('Error al obtener servicios:', err)
     });
@@ -83,8 +84,7 @@ export class NuevaReservaComponent implements OnInit {
       this.selectBusiness(business);
     }
   }
-  
-  
+
   /**
    * Selecciona el negocio, centra el mapa y actualiza el formulario.
    */
@@ -96,7 +96,6 @@ export class NuevaReservaComponent implements OnInit {
 
   /**
    * Convierte una cadena de coordenadas "lat,lng" en un objeto LatLngLiteral.
-   * Si es inválida, retorna un valor por defecto (Madrid).
    */
   parseCoordinates(coords: string): google.maps.LatLngLiteral {
     if (!coords) {
@@ -104,19 +103,8 @@ export class NuevaReservaComponent implements OnInit {
       return { lat: 40.416775, lng: -3.70379 };
     }
     const parts = coords.split(',').map(coord => parseFloat(coord.trim()));
-    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
-      return { lat: parts[0], lng: parts[1] };
-    }
-    console.warn(`Formato incorrecto de coordenadas: "${coords}". Se usará el valor predeterminado (Madrid).`);
-    return { lat: 40.416775, lng: -3.70379 };
-  }
-
-  /**
-   * Maneja el clic en el marcador del mapa.
-   */
-  onMarkerClick(business: Business): void {
-    if (!business) return;
-    this.selectBusiness(business);
+    return parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1]) ? 
+      { lat: parts[0], lng: parts[1] } : { lat: 40.416775, lng: -3.70379 };
   }
 
   /**
@@ -124,7 +112,15 @@ export class NuevaReservaComponent implements OnInit {
    */
   onSubmit(): void {
     if (this.reservationForm.valid) {
-      const newReservation = this.reservationForm.value;
+      const newReservation: Omit<Reservation, 'id_reserva' | 'created_at' | 'updated_at'> = {
+        fecha: this.reservationForm.value.date,
+        hora: this.reservationForm.value.time,
+        estado: "pendiente",
+        id_usuario: 3, // Se debería obtener dinámicamente
+        id_negocio: this.reservationForm.value.businessId,
+        id_servicio: this.reservationForm.value.serviceId
+      };
+  
       this.reservationService.createReservation(newReservation).pipe(take(1)).subscribe({
         next: (created) => {
           console.log('Nueva Reserva creada:', created);
@@ -138,4 +134,5 @@ export class NuevaReservaComponent implements OnInit {
       console.warn('El formulario no es válido.');
     }
   }
+  
 }

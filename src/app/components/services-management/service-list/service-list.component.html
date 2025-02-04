@@ -1,0 +1,36 @@
+<div class="service-list">
+    <h2><i class="pi pi-list"></i> Lista de Servicios</h2>
+  
+    <!-- Botón para crear un nuevo servicio -->
+    <button pButton type="button" label="Crear Nuevo Servicio" icon="pi pi-plus" class="p-button-primary" (click)="crearServicio()"></button>
+  
+    <!-- Tabla de Servicios -->
+    <p-table [value]="servicios" responsiveLayout="scroll" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Duración (min)</th>
+          <th>Precio ($)</th>
+          <th>ID Negocio</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-servicio>
+        <tr>
+          <td>{{ servicio.id_servicio }}</td>
+          <td>{{ servicio.nombre }}</td>
+          <td>{{ servicio.descripcion }}</td>
+          <td>{{ servicio.duracion }}</td>
+          <td>{{ servicio.precio | currency:'USD' }}</td>
+          <td>{{ servicio.id_negocio }}</td>
+          <td>
+            <button pButton type="button" icon="pi pi-eye" class="p-button-text p-button-info" (click)="verServicio(servicio.id_servicio)" title="Ver"></button>
+            <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-danger" (click)="eliminarServicio(servicio.id_servicio)" title="Eliminar"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

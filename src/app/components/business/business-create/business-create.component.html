@@ -1,0 +1,26 @@
+<div class="business-create">
+    <h2>Crear Nuevo Negocio</h2>
+    <form (ngSubmit)="crearNegocio()">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" [(ngModel)]="nuevoNegocio.nombre" name="nombre" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <textarea id="direccion" [(ngModel)]="nuevoNegocio.direccion" name="direccion" required></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="contacto">Contacto:</label>
+        <input type="text" id="contacto" [(ngModel)]="nuevoNegocio.contacto" name="contacto" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="coordenadas">Coordenadas:</label>
+        <input type="text" id="coordenadas" [(ngModel)]="nuevoNegocio.coordenadas" name="coordenadas">
+      </div>
+  
+      <button type="submit">Crear Negocio</button>
+    </form>
+  </div>

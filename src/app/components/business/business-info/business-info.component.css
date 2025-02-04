@@ -1,0 +1,96 @@
+/* Contenedor principal */
+.business-info {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Estilo para el título */
+h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #007bff;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 i {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  color: #007bff;
+}
+
+/* Estilo de la tarjeta */
+p-card {
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+/* Estilo de los campos del formulario */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Ajuste de los campos de PrimeNG */
+p-inputText, p-inputMask {
+  width: 100%;
+  margin-top: 5px;
+}
+
+/* Estilo de los botones */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Botón de Guardar */
+.p-button-success {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+/* Botón de Cancelar */
+.p-button-secondary {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+/* Efectos hover */
+.p-button-success:hover {
+  background-color: #218838 !important;
+}
+
+.p-button-secondary:hover {
+  background-color: #5a6268 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .business-info {
+      padding: 1rem;
+      width: 90%;
+  }
+  
+  .buttons {
+      flex-direction: column;
+      gap: 10px;
+  }
+}

@@ -1,0 +1,37 @@
+<div class="reservation-info">
+    <h2><i class="pi pi-calendar"></i> Información de la Reserva</h2>
+
+    <p-card>
+        <form [formGroup]="reservationForm" (ngSubmit)="guardarCambios()">
+            <div class="p-fluid form-group">
+                <label for="fecha">Fecha:</label>
+                <p-calendar id="fecha" formControlName="fecha" showIcon dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+
+            <div class="p-fluid form-group">
+                <label for="hora">Hora:</label>
+                <p-calendar id="hora" formControlName="hora" timeOnly showIcon></p-calendar>
+            </div>
+
+            <div class="p-fluid form-group">
+                <label for="estado">Estado:</label>
+                <p-dropdown id="estado" formControlName="estado" [options]="estadoOptions" placeholder="Seleccione Estado"></p-dropdown>
+            </div>
+
+            <div class="p-fluid form-group">
+                <label for="id_negocio">ID Negocio:</label>
+                <p-inputText id="id_negocio" formControlName="id_negocio" [disabled]="true"></p-inputText>
+            </div>
+
+            <div class="p-fluid form-group">
+                <label for="id_servicio">ID Servicio:</label>
+                <p-inputText id="id_servicio" formControlName="id_servicio" [disabled]="true"></p-inputText>
+            </div>
+
+            <div class="buttons">
+                <p-button type="submit" label="Guardar Cambios" icon="pi pi-check" class="p-button-success"></p-button>
+                <p-button type="button" label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="cancelar()"></p-button>
+            </div>
+        </form>
+    </p-card>
+</div>

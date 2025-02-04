@@ -1,0 +1,45 @@
+<div class="transaction-info">
+  <h2><i class="pi pi-info-circle"></i> Información de la Transacción</h2>
+
+  <p-card class="form-container">
+    <ng-template pTemplate="content">
+      <form [formGroup]="transactionForm" (ngSubmit)="saveChanges()">
+        <!-- Monto -->
+        <div class="p-field">
+          <label for="monto">Monto:</label>
+          <p-inputNumber id="monto" formControlName="monto" mode="currency" currency="USD"></p-inputNumber>
+        </div>
+
+        <!-- Estado -->
+        <div class="p-field">
+          <label for="estado">Estado:</label>
+          <p-dropdown id="estado" formControlName="estado" [options]="estadoOptions" placeholder="Selecciona un estado"></p-dropdown>
+        </div>
+
+        <!-- Método de Pago -->
+        <div class="p-field">
+          <label for="metodo_pago">Método de Pago:</label>
+          <p-dropdown id="metodo_pago" formControlName="metodo_pago" [options]="metodoPagoOptions" placeholder="Selecciona un método"></p-dropdown>
+        </div>
+
+        <!-- Fecha de Transacción -->
+        <div class="p-field">
+          <label for="fecha_transaccion">Fecha:</label>
+          <p-calendar id="fecha_transaccion" formControlName="fecha_transaccion" showIcon dateFormat="yy-mm-dd"></p-calendar>
+        </div>
+
+        <!-- ID de Reserva -->
+        <div class="p-field">
+          <label for="id_reserva">ID de Reserva:</label>
+          <p-inputNumber id="id_reserva" formControlName="id_reserva"></p-inputNumber>
+        </div>
+
+        <!-- Botones -->
+        <div class="form-buttons">
+          <button pButton type="submit" label="Guardar Cambios" icon="pi pi-check" class="p-button-success" [disabled]="transactionForm.invalid"></button>
+          <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="cancelar()"></button>
+        </div>
+      </form>
+    </ng-template>
+  </p-card>
+</div>
