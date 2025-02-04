@@ -41,14 +41,14 @@ export class ReservationsComponent implements OnInit {
 
   /**
    * Cancela una reserva y recarga la lista de reservas.
-   * @param id_reserva ID de la reserva a cancelar.
+   * @param id ID de la reserva a cancelar.
    */
-  cancelarReserva(id_reserva: number): void {
+  cancelarReserva(id: number): void {
     if (confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
-      this.reservationService.deleteReservation(id_reserva).subscribe(
+      this.reservationService.deleteReservation(id).subscribe(
         () => {
           alert('Reserva cancelada correctamente');
-          this.loadReservations(); // Recargar la lista de reservas
+          this.loadReservations();
         },
         (error) => {
           console.error('Error al cancelar la reserva:', error);
@@ -60,20 +60,20 @@ export class ReservationsComponent implements OnInit {
 
   /**
    * Redirige a la vista de información de la reserva seleccionada.
-   * @param id_reserva ID de la reserva
+   * @param id ID de la reserva.
    */
-  verReserva(id_reserva: number): void {
-    this.router.navigate(['/reservacion-info', id_reserva]);
+  verReserva(id: number): void {
+    this.router.navigate(['/reservacion-info', id]);
   }
 
   /**
    * Retorna el color del estado de la reserva en base a su valor.
-   * @param estado Estado de la reserva
+   * @param estado Estado de la reserva.
    */
   getEstadoColor(estado: string): "success" | "secondary" | "info" | "warning" | "danger" | "contrast" | undefined {
     switch (estado.toLowerCase()) {
       case "pendiente":
-        return "warning"; // ✅ CORREGIDO: "warning" en lugar de "warn"
+        return "warning";
       case "confirmada":
         return "success";
       case "cancelada":
@@ -82,5 +82,4 @@ export class ReservationsComponent implements OnInit {
         return "secondary";
     }
   }
-  
 }

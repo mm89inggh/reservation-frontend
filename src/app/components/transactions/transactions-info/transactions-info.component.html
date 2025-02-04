@@ -16,22 +16,10 @@
           <p-dropdown id="estado" formControlName="estado" [options]="estadoOptions" placeholder="Selecciona un estado"></p-dropdown>
         </div>
 
-        <!-- Método de Pago -->
-        <div class="p-field">
-          <label for="metodo_pago">Método de Pago:</label>
-          <p-dropdown id="metodo_pago" formControlName="metodo_pago" [options]="metodoPagoOptions" placeholder="Selecciona un método"></p-dropdown>
-        </div>
-
-        <!-- Fecha de Transacción -->
-        <div class="p-field">
-          <label for="fecha_transaccion">Fecha:</label>
-          <p-calendar id="fecha_transaccion" formControlName="fecha_transaccion" showIcon dateFormat="yy-mm-dd"></p-calendar>
-        </div>
-
         <!-- ID de Reserva -->
         <div class="p-field">
-          <label for="id_reserva">ID de Reserva:</label>
-          <p-inputNumber id="id_reserva" formControlName="id_reserva"></p-inputNumber>
+          <label for="reservaId">ID de Reserva:</label>
+          <p-inputNumber id="reservaId" formControlName="reservaId"></p-inputNumber>
         </div>
 
         <!-- Botones -->

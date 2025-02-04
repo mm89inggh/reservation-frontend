@@ -57,10 +57,10 @@ export class NuevaReservaComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.reservationForm = this.fb.group({
-      businessId: ['', Validators.required],
-      date: ['', Validators.required],
-      time: ['', Validators.required],
-      serviceId: ['', Validators.required]
+      negocioId: ['', Validators.required],
+      fecha: ['', Validators.required],
+      hora: ['', Validators.required],
+      servicioId: ['', Validators.required]
     });
   }
 
@@ -79,8 +79,8 @@ export class NuevaReservaComponent implements OnInit {
   }
 
   onBusinessSelect(event: any): void {
-    const businessId = event.value;
-    const business = this.businesses.find(b => b.id_negocio === businessId);
+    const negocioId = event.value;
+    const business = this.businesses.find(b => b.id === negocioId);
     if (business) {
       this.selectBusiness(business);
     }
@@ -89,7 +89,7 @@ export class NuevaReservaComponent implements OnInit {
   selectBusiness(business: Business): void {
     this.selectedBusiness = business;
     this.center = this.parseCoordinates(business.coordenadas);
-    this.reservationForm.patchValue({ businessId: business.id_negocio });
+    this.reservationForm.patchValue({ negocioId: business.id });
   }
 
   parseCoordinates(coords: string): google.maps.LatLngLiteral {
@@ -100,15 +100,15 @@ export class NuevaReservaComponent implements OnInit {
 
   onSubmit(): void {
     if (this.reservationForm.valid) {
-      const newReservation: Omit<Reservation, 'id_reserva' | 'created_at' | 'updated_at'> = {
-        fecha: this.reservationForm.value.date,
-        hora: this.reservationForm.value.time,
+      const newReservation: Omit<Reservation, 'id'> = {
+        fecha: this.reservationForm.value.fecha,
+        hora: this.reservationForm.value.hora,
         estado: "pendiente",
-        id_usuario: 3,
-        id_negocio: this.reservationForm.value.businessId,
-        id_servicio: this.reservationForm.value.serviceId
+        usuarioId: 3,
+        negocioId: this.reservationForm.value.negocioId,
+        servicioId: this.reservationForm.value.servicioId
       };
-  
+
       this.reservationService.createReservation(newReservation).pipe(take(1)).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Reserva creada', detail: 'Tu reserva se ha realizado con éxito' });

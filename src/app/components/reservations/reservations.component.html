@@ -18,9 +18,23 @@
         <td>
           <p-tag [value]="reserva.estado" [severity]="getEstadoColor(reserva.estado)"></p-tag>
         </td>
-        <td>
-          <button pButton type="button" icon="pi pi-eye" class="p-button-text p-button-info" (click)="verReserva(reserva.id_reserva)" title="Ver Detalles"></button>
-          <button pButton type="button" icon="pi pi-times" class="p-button-text p-button-danger" (click)="cancelarReserva(reserva.id_reserva)" title="Cancelar"></button>
+        <td class="acciones">
+          <button 
+            pButton 
+            type="button" 
+            icon="pi pi-eye" 
+            class="p-button-rounded p-button-info" 
+            (click)="verReserva(reserva.id)" 
+            title="Ver Detalles">
+          </button>
+          <button 
+            pButton 
+            type="button" 
+            icon="pi pi-times" 
+            class="p-button-rounded p-button-danger" 
+            (click)="cancelarReserva(reserva.id)" 
+            title="Cancelar">
+          </button>
         </td>
       </tr>
     </ng-template>

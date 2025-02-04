@@ -24,29 +24,28 @@ export class ServiceService {
 
   /**
    * Obtiene un servicio por su ID.
-   * @param id_servicio ID del servicio a obtener.
+   * @param id ID del servicio a obtener.
    * @returns Observable con la información del servicio.
    */
-  getServiceById(id_servicio: number): Observable<Service> {
+  getServiceById(id: number): Observable<Service> {
     const body = {
       targetMethod: "GET",
-      body: { id_servicio }
+      body: { id }
     };
     return this.http.post<Service>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
-  /**
-   * Crea un nuevo servicio en el sistema.
-   * @param servicio Datos del servicio a crear (sin ID).
-   * @param negocioId ID del negocio al que pertenece el servicio.
-   * @returns Observable con la respuesta del backend.
-   */
-  createService(servicio: Omit<Service, 'id_servicio'>, negocioId: number): Observable<Service> {
+ /**
+ * Crea un nuevo servicio en el sistema.
+ * @param servicio Datos del servicio a crear (sin ID).
+ * @returns Observable con la respuesta del backend.
+ */
+createService(servicio: Omit<Service, 'id'>): Observable<Service> {
     const body = {
       targetMethod: "POST",
       body: {
-        ...servicio,
-        id_negocio: negocioId
+        id: 0,
+        ...servicio
       }
     };
     return this.http.post<Service>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
@@ -54,15 +53,15 @@ export class ServiceService {
 
   /**
    * Actualiza un servicio existente.
-   * @param id_servicio ID del servicio a actualizar.
+   * @param id ID del servicio a actualizar.
    * @param updatedInfo Datos actualizados del servicio.
    * @returns Observable con la respuesta del backend.
    */
-  updateService(id_servicio: number, updatedInfo: Partial<Service>): Observable<Service> {
+  updateService(id: number, updatedInfo: Partial<Service>): Observable<Service> {
     const body = {
       targetMethod: "UPDATE",
       body: {
-        id_servicio,
+        id,
         ...updatedInfo
       }
     };
@@ -71,13 +70,13 @@ export class ServiceService {
 
   /**
    * Elimina un servicio por su ID.
-   * @param id_servicio ID del servicio a eliminar.
+   * @param id ID del servicio a eliminar.
    * @returns Observable con la respuesta del backend.
    */
-  deleteService(id_servicio: number): Observable<void> {
+  deleteService(id: number): Observable<void> {
     const body = {
       targetMethod: "DELETE",
-      body: { id_servicio }
+      body: { id }
     };
     return this.http.post<void>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }

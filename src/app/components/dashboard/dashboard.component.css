@@ -1,27 +1,58 @@
-.reserva-status {
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-transform: capitalize;
+
+.dashboard {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Colores según el estado */
+.dashboard-header {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.dashboard-nav {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.resumen-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reserva-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
 .estado-pendiente {
   background-color: #ffc107;
-  color: #212529;
+  color: #000;
 }
 
 .estado-confirmada {
   background-color: #28a745;
-  color: white;
+  color: #fff;
 }
 
 .estado-cancelada {
   background-color: #dc3545;
-  color: white;
+  color: #fff;
 }
 
-.estado-desconocido {
-  background-color: #6c757d;
-  color: white;
+.dashboard-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #555;
 }

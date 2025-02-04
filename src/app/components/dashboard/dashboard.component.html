@@ -1,20 +1,20 @@
 <div class="dashboard">
-  <p-panel header="Bienvenido, {{ negocio?.nombre || 'Propietario' }}">
+  <p-panel header="Bienvenido, {{ negocio?.nombre || 'Propietario' }}" class="dashboard-header">
     <div class="dashboard-nav">
-      <p-button label="Servicios" icon="pi pi-briefcase" routerLink="/services-management" class="p-button-text"></p-button>
-      <p-button label="Notificaciones" icon="pi pi-bell" routerLink="/notifications" class="p-button-text"></p-button>
-      <p-button label="Mi Negocio" icon="pi pi-building" routerLink="/business-info" class="p-button-text"></p-button>
-      <p-button label="Transacciones" icon="pi pi-credit-card" routerLink="/transactions" class="p-button-text"></p-button>
+      <p-button label="Servicios" icon="pi pi-briefcase" routerLink="/service-list" class="p-button-rounded p-button-info"></p-button>
+      <p-button label="Notificaciones" icon="pi pi-bell" routerLink="/notifications" class="p-button-rounded p-button-warning"></p-button>
+      <p-button label="Mi Negocio" icon="pi pi-building" [routerLink]="['/business-info', negocio?.id]" class="p-button-rounded p-button-primary"></p-button>
+      <p-button label="Transacciones" icon="pi pi-credit-card" routerLink="/transactions-list" class="p-button-rounded p-button-success"></p-button>
     </div>
   </p-panel>
 
   <section class="resumen-reservas">
-    <p-card>
+    <p-card class="resumen-card">
       <ng-template pTemplate="header">
         <h3>Próximas Reservas</h3>
       </ng-template>
 
-      <p-table [value]="reservas" responsiveLayout="scroll">
+      <p-table *ngIf="reservas.length > 0; else noReservas" [value]="reservas" responsiveLayout="scroll">
         <ng-template pTemplate="header">
           <tr>
             <th>Fecha</th>
@@ -37,7 +37,7 @@
       </p-table>
 
       <ng-template #noReservas>
-        <p>No hay reservas próximas.</p>
+        <p class="no-reservas">No hay reservas próximas.</p>
       </ng-template>
     </p-card>
   </section>

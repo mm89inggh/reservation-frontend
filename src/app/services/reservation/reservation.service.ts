@@ -24,13 +24,13 @@ export class ReservationService {
 
   /**
    * Obtiene una reserva por su ID.
-   * @param reservaId ID de la reserva a obtener.
+   * @param id ID de la reserva a obtener.
    * @returns Observable con la información de la reserva.
    */
-  getReservationById(reservaId: number): Observable<Reservation> {
+  getReservationById(id: number): Observable<Reservation> {
     const body = {
       targetMethod: "GET",
-      body: { reservaId }
+      body: { id }
     };
     return this.http.post<Reservation>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
@@ -51,15 +51,15 @@ export class ReservationService {
 
   /**
    * Actualiza una reserva existente.
-   * @param reservaId ID de la reserva a actualizar.
+   * @param id ID de la reserva a actualizar.
    * @param updatedInfo Datos actualizados de la reserva.
    * @returns Observable con la respuesta del backend.
    */
-  updateReservation(reservaId: number, updatedInfo: Partial<Reservation>): Observable<Reservation> {
+  updateReservation(id: number, updatedInfo: Partial<Reservation>): Observable<Reservation> {
     const body = {
       targetMethod: "UPDATE",
       body: {
-        reservaId,
+        id,
         ...updatedInfo
       }
     };
@@ -68,13 +68,13 @@ export class ReservationService {
 
   /**
    * Elimina una reserva por su ID.
-   * @param reservaId ID de la reserva a eliminar.
+   * @param id ID de la reserva a eliminar.
    * @returns Observable con la respuesta del backend.
    */
-  deleteReservation(reservaId: number): Observable<void> {
+  deleteReservation(id: number): Observable<void> {
     const body = {
       targetMethod: "DELETE",
-      body: { reservaId }
+      body: { id }
     };
     return this.http.post<void>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }

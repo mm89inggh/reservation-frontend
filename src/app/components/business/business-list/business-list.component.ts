@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
 import { BusinessService } from '../../../services/business/business.service';
 import { Business } from '../../../models/business.model';
 import { Router } from '@angular/router';
@@ -17,6 +18,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
   standalone: true,
   imports: [
     CommonModule,
+    HttpClientModule, // Agregar esta línea para solucionar el error
     TableModule,
     ButtonModule,
     CardModule,
@@ -25,7 +27,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
   ],
   templateUrl: './business-list.component.html',
   styleUrls: ['./business-list.component.css'],
-  providers: [MessageService, ConfirmationService] // Añadir servicios de PrimeNG
+  providers: [MessageService, ConfirmationService, BusinessService]
 })
 export class BusinessListComponent implements OnInit {
   negocios: Business[] = [];

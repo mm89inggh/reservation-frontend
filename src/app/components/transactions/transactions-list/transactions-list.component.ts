@@ -35,13 +35,15 @@ export class TransactionsListComponent implements OnInit {
     );
   }
 
-  verTransaccion(id_transaccion: number): void {
-    this.router.navigate(['/transactions-info', id_transaccion]);
+  verTransaccion(id: number | undefined): void {
+    if (id !== undefined) {
+      this.router.navigate(['/transactions-info', id]);
+    }
   }
 
-  eliminarTransaccion(id_transaccion: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta transacción?')) {
-      this.transactionService.deleteTransaction(id_transaccion).subscribe(
+  eliminarTransaccion(id: number | undefined): void {
+    if (id !== undefined && confirm('¿Estás seguro de que deseas eliminar esta transacción?')) {
+      this.transactionService.deleteTransaction(id).subscribe(
         () => {
           alert('Transacción eliminada correctamente');
           this.loadAllTransactions();
@@ -61,16 +63,7 @@ export class TransactionsListComponent implements OnInit {
   /**
    * Retorna una clase CSS dependiendo del estado de la transacción
    */
-  getEstadoClass(estado: string): string {
-    switch (estado) {
-      case 'Pendiente':
-        return 'estado-pendiente';
-      case 'Completado':
-        return 'estado-completado';
-      case 'Cancelado':
-        return 'estado-cancelado';
-      default:
-        return '';
-    }
+  getEstadoClass(estado: boolean): string {
+    return estado ? 'estado-activo' : 'estado-inactivo';
   }
 }

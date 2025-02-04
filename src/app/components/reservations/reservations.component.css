@@ -3,14 +3,33 @@
   max-width: 90%;
   margin: 40px auto;
   padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
+}
+
+/* Título */
+.reservations h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reservations h2 i {
+  margin-right: 10px;
+  color: #007bff;
 }
 
 /* Tabla */
 .p-table {
   width: 100%;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   background: white;
 }
 
@@ -20,46 +39,62 @@
   color: white;
   font-weight: bold;
   text-align: center;
-  padding: 10px;
+  padding: 12px;
 }
 
+/* Celdas */
 .p-table td {
   text-align: center;
-  padding: 10px;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+/* Acciones */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
 /* Botones */
-.p-button-text {
+.p-button-rounded {
+  transition: all 0.3s ease-in-out;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   font-size: 1rem;
-  padding: 5px 10px;
-  transition: all 0.3s ease;
 }
 
 .p-button-info {
-  color: #17a2b8;
+  background: #17a2b8;
+  color: white;
 }
 
 .p-button-info:hover {
-  background: rgba(23, 162, 184, 0.1);
+  background: #138496;
 }
 
 .p-button-danger {
-  color: #dc3545;
+  background: #dc3545;
+  color: white;
 }
 
 .p-button-danger:hover {
-  background: rgba(220, 53, 69, 0.1);
+  background: #c82333;
 }
 
 /* Responsivo */
 @media (max-width: 768px) {
   .reservations {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
   }
 
   .p-table th, .p-table td {
     font-size: 0.9rem;
-    padding: 8px;
+    padding: 10px;
   }
 }

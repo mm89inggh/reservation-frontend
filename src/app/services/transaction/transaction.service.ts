@@ -25,7 +25,7 @@ export class TransactionService {
   getTransactionById(id: number): Observable<any> {
     const body = {
       targetMethod: "GET",
-      body: { id_transaccion: id }
+      body: { id: id }
     };
     return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
@@ -33,7 +33,7 @@ export class TransactionService {
   /**
    * Crea una nueva transacción.
    */
-  createTransaction(transaction: Omit<Transaction, 'id_transaccion'>): Observable<any> {
+  createTransaction(transaction: Omit<Transaction, 'id'>): Observable<any> {
     const body = {
       targetMethod: "POST",
       body: transaction
@@ -59,7 +59,7 @@ export class TransactionService {
   deleteTransaction(id: number): Observable<any> {
     const body = {
       targetMethod: "DELETE",
-      body: { id_transaccion: id }
+      body: { id: id }
     };
     return this.http.post<any>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }

@@ -15,40 +15,40 @@ export class BusinessService {
 
   /**
    * Obtiene la información de un negocio por su ID.
-   * @param id_negocio ID del negocio
+   * @param id ID del negocio
    * @returns Observable con la respuesta del backend
    */
-  getBusinessById(id_negocio: number): Observable<Business> {
+  getBusinessById(id: number): Observable<Business> {
     const body = {
       targetMethod: "GET",
-      body: { id_negocio }
+      body: { id }
     };
     return this.http.post<Business>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
    * Actualiza la información de un negocio.
-   * @param id_negocio ID del negocio a actualizar
+   * @param id ID del negocio a actualizar
    * @param updatedInfo Objeto con la información actualizada
    * @returns Observable con la respuesta del backend
    */
-  updateBusiness(id_negocio: number, updatedInfo: Partial<Business>): Observable<Business> {
+  updateBusiness(id: number, updatedInfo: Partial<Business>): Observable<Business> {
     const body = {
       targetMethod: "UPDATE",
-      body: { id_negocio, ...updatedInfo }
+      body: { id, ...updatedInfo }
     };
     return this.http.post<Business>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
    * Elimina un negocio por su ID.
-   * @param id_negocio ID del negocio a eliminar
+   * @param id ID del negocio a eliminar
    * @returns Observable con la respuesta del backend
    */
-  deleteBusiness(id_negocio: number): Observable<void> {
+  deleteBusiness(id: number): Observable<void> {
     const body = {
       targetMethod: "DELETE",
-      body: { id_negocio }
+      body: { id }
     };
     return this.http.post<void>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
   }

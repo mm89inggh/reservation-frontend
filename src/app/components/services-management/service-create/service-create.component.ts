@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../../../services/service/service.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { BusinessService } from '../../../services/business/business.service';
+import { Business } from '../../../models/business.model';
 
 @Component({
   selector: 'app-service-create',
@@ -24,26 +26,40 @@ import { CardModule } from 'primeng/card';
   templateUrl: './service-create.component.html',
   styleUrls: ['./service-create.component.css']
 })
-export class ServiceCreateComponent {
+export class ServiceCreateComponent implements OnInit {
   serviceForm: FormGroup;
+  negocios!: Business[];
 
   constructor(
     private serviceService: ServiceService,
+    private businessService: BusinessService, // Inyectamos el servicio de negocios
     private router: Router,
     private fb: FormBuilder
   ) {
     this.serviceForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
-      descripcion: ['', [Validators.required, Validators.minLength(10)]],
-      duracion: [null, [Validators.required, Validators.min(1)]],
-      precio: [null, [Validators.required, Validators.min(0)]],
-      id_negocio: [null, [Validators.required, Validators.min(1)]]
+      negocioId: [null, [Validators.required, Validators.min(1)]]
     });
+  }
+
+  ngOnInit(): void {
+    this.cargarNegocios();
+  }
+
+  cargarNegocios(): void {
+    this.businessService.getAllBusinesses().subscribe(
+      (negocios) => {
+        this.negocios = negocios;
+      },
+      (error) => {
+        console.error('Error al obtener la lista de negocios:', error);
+      }
+    );
   }
 
   crearServicio(): void {
     if (this.serviceForm.valid) {
-      this.serviceService.createService(this.serviceForm.value, this.serviceForm.value.id_negocio).subscribe(
+      this.serviceService.createService(this.serviceForm.value).subscribe(
         () => {
           alert('Servicio creado correctamente');
           this.router.navigate(['/service-list']);

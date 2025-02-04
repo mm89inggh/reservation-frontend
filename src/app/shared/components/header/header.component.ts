@@ -22,7 +22,7 @@ export class HeaderComponent {
       { label: 'Reservas', icon: 'pi pi-calendar', routerLink: '/reservations' },
       { label: 'Nueva Reserva', icon: 'pi pi-plus', routerLink: '/nueva-reserva' },
       { label: 'Notificaciones', icon: 'pi pi-bell', routerLink: '/notifications' },
-      { label: 'Negocio', icon: 'pi pi-briefcase', routerLink: '/business-info' }
+      { label: 'Negocio', icon: 'pi pi-briefcase', routerLink: '/business-list' }
     ];
   }
 

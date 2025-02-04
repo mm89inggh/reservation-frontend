@@ -1,43 +1,44 @@
 <div class="nueva-reserva">
-    <p-panel header="Nueva Reserva">
-      <div class="p-field">
-        <label for="businessSelect">Seleccione un negocio:</label>
-        <p-dropdown id="businessSelect" [options]="businesses" optionLabel="nombre" optionValue="id_negocio" 
-                    (onChange)="onBusinessSelect($event)" placeholder="Seleccione un negocio"></p-dropdown>
+  <p-panel header="Nueva Reserva">
+    <div class="p-field">
+      <label for="businessSelect">Seleccione un negocio:</label>
+      <p-dropdown id="businessSelect" [options]="businesses" optionLabel="nombre" optionValue="id"
+                  (onChange)="onBusinessSelect($event)" placeholder="Seleccione un negocio"></p-dropdown>
+    </div>
+
+    <div *ngIf="selectedBusiness" class="reservation-container">
+      <!-- Sección del Mapa -->
+      <div class="map-section">
+        <google-map class="map-canvas" [center]="center" [zoom]="zoom">
+          <map-marker [position]="parseCoordinates(selectedBusiness.coordenadas)"></map-marker>
+        </google-map>
       </div>
-      
-      <div *ngIf="selectedBusiness" class="reservation-container">
-        <div class="map-section">
-          <google-map class="map-canvas" [center]="center" [zoom]="zoom">
-            <map-marker [position]="parseCoordinates(selectedBusiness.coordenadas)"></map-marker>
-          </google-map>
-        </div>
-  
-        <div class="reservation-form">
-          <h3>Reserva en: {{ selectedBusiness.nombre }}</h3>
-          <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-            <div class="p-field">
-              <label for="date">Fecha:</label>
-              <p-calendar id="date" formControlName="date" dateFormat="yy-mm-dd" showIcon></p-calendar>
-            </div>
-  
-            <div class="p-field">
-              <label for="time">Hora:</label>
-              <p-calendar id="time" formControlName="time" timeOnly showIcon></p-calendar>
-            </div>
-  
-            <div class="p-field">
-              <label for="serviceId">Servicio:</label>
-              <p-dropdown id="serviceId" [options]="services" optionLabel="nombre" optionValue="id_servicio"
-                          formControlName="serviceId" placeholder="Seleccione un servicio"></p-dropdown>
-            </div>
-  
-            <p-button type="submit" label="Crear Reserva" icon="pi pi-check" class="p-button-success"></p-button>
-          </form>
-        </div>
+
+      <!-- Sección del Formulario -->
+      <div class="reservation-form">
+        <h3>Reserva en: {{ selectedBusiness.nombre }}</h3>
+        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+          <div class="p-field">
+            <label for="fecha">Fecha:</label>
+            <p-calendar id="fecha" formControlName="fecha" dateFormat="yy-mm-dd" showIcon></p-calendar>
+          </div>
+
+          <div class="p-field">
+            <label for="hora">Hora:</label>
+            <p-calendar id="hora" formControlName="hora" timeOnly showIcon></p-calendar>
+          </div>
+
+          <div class="p-field">
+            <label for="servicioId">Servicio:</label>
+            <p-dropdown id="servicioId" [options]="services" optionLabel="nombre" optionValue="id"
+                        formControlName="servicioId" placeholder="Seleccione un servicio"></p-dropdown>
+          </div>
+
+          <p-button type="submit" label="Crear Reserva" icon="pi pi-check" class="p-button-success"></p-button>
+        </form>
       </div>
-    </p-panel>
-  
-    <p-toast position="top-right"></p-toast>
-  </div>
-  
+    </div>
+  </p-panel>
+
+  <p-toast position="top-right"></p-toast>
+</div>

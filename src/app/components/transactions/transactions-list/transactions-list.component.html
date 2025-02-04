@@ -11,8 +11,6 @@
         <th>ID</th>
         <th>Monto</th>
         <th>Estado</th>
-        <th>Método de Pago</th>
-        <th>Fecha</th>
         <th>ID Reserva</th>
         <th>Acciones</th>
       </tr>
@@ -20,19 +18,17 @@
 
     <ng-template pTemplate="body" let-transaccion>
       <tr>
-        <td>{{ transaccion.id_transaccion }}</td>
+        <td>{{ transaccion.id }}</td>
         <td>{{ transaccion.monto | currency:'USD' }}</td>
         <td>
           <span [ngClass]="getEstadoClass(transaccion.estado)">
-            {{ transaccion.estado }}
+            {{ transaccion.estado ? 'Activo' : 'Inactivo' }}
           </span>
         </td>
-        <td>{{ transaccion.metodo_pago }}</td>
-        <td>{{ transaccion.fecha_transaccion | date:'shortDate' }}</td>
-        <td>{{ transaccion.id_reserva }}</td>
+        <td>{{ transaccion.reservaId }}</td>
         <td>
-          <button pButton icon="pi pi-eye" class="p-button-rounded p-button-info" (click)="verTransaccion(transaccion.id_transaccion)"></button>
-          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="eliminarTransaccion(transaccion.id_transaccion)"></button>
+          <button pButton icon="pi pi-eye" class="p-button-rounded p-button-info" (click)="verTransaccion(transaccion.id)"></button>
+          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="eliminarTransaccion(transaccion.id)"></button>
         </td>
       </tr>
     </ng-template>

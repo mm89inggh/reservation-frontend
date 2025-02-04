@@ -1,70 +1,116 @@
-/* Estilos para el encabezado */
+/* ===== Estilos Generales ===== */
 .app-header {
-  background: linear-gradient(135deg, #007bff, #00aaff);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #0057b7, #00bcd4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   color: #fff;
   position: sticky;
   top: 0;
   width: 100%;
   z-index: 1000;
+  padding: 15px 0;
+  transition: all 0.3s ease-in-out;
 }
 
-/* Contenedor principal */
+/* ===== Contenedor Principal ===== */
 .app-header .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  gap: 20px;
 }
 
-/* Logo */
+/* ===== Logo y Título ===== */
+.logo-title-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-shrink: 0;
+}
+
 .logo {
-  height: 40px;
-  margin-right: 10px;
+  height: 55px;
+  width: auto;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Título */
-.app-header h1 {
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.app-title {
   margin: 0;
   font-size: 1.8rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.3);
 }
 
-/* Menú */
+/* ===== Menú ===== */
+.menu-container {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
 .menu-bar {
-  width: 100%;
   background: transparent;
   border: none;
+  width: 100%;
 }
 
-/* Botón de Cerrar Sesión */
-.p-button-danger {
-  background: #ff4444 !important;
+/* ===== Botón de Cerrar Sesión ===== */
+.logout-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.logout-button {
+  background: linear-gradient(135deg, #ff4d4d, #d93636);
   border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
+  padding: 12px 25px;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(255, 77, 77, 0.3);
 }
 
-.p-button-danger:hover {
-  background: #cc0000 !important;
+.logout-button:hover {
+  background: linear-gradient(135deg, #d93636, #b02a2a);
   transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.5);
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
+/* ===== Responsivo ===== */
+@media (max-width: 1024px) {
   .app-header .container {
     flex-direction: column;
     text-align: center;
+    gap: 15px;
+  }
+
+  .menu-container {
+    width: 100%;
+    justify-content: center;
   }
 
   .menu-bar {
-    margin-top: 10px;
+    width: 100%;
+  }
+
+  .logout-container {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .logout-button {
+    max-width: 100%;
   }
 }

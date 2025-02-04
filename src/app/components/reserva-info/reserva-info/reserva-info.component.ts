@@ -24,7 +24,7 @@ import { CardModule } from 'primeng/card';
   templateUrl: './reserva-info.component.html',
   styleUrls: ['./reserva-info.component.css']
 })
-export class ReservaInfoComponent implements OnInit {
+export class ReservaInfoComponent implements OnInit { 
   reservationForm: FormGroup;
   estadoOptions = [
     { label: 'Pendiente', value: 'pendiente' },
@@ -39,21 +39,21 @@ export class ReservaInfoComponent implements OnInit {
     private router: Router
   ) {
     this.reservationForm = this.fb.group({
-      id_reserva: [0],
+      id: [0],  // Se cambia id_reserva por id
       fecha: [null, Validators.required],
       hora: [null, Validators.required],
       estado: ['', Validators.required],
-      id_usuario: [0],
-      id_negocio: [0, Validators.required],
-      id_servicio: [0, Validators.required]
+      usuarioId: [0],  // Se cambia id_usuario por usuarioId
+      negocioId: [0, Validators.required],  // Se cambia id_negocio por negocioId
+      servicioId: [0, Validators.required]  // Se cambia id_servicio por servicioId
     });
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const id_reserva = +params['id'];
-      if (id_reserva) {
-        this.loadReservationInfo(id_reserva);
+      const id = +params['id'];
+      if (id) {
+        this.loadReservationInfo(id);
       }
     });
   }
@@ -61,8 +61,8 @@ export class ReservaInfoComponent implements OnInit {
   /**
    * Carga la información de una reserva por su ID.
    */
-  loadReservationInfo(id_reserva: number): void {
-    this.reservationService.getReservationById(id_reserva).subscribe(
+  loadReservationInfo(id: number): void {
+    this.reservationService.getReservationById(id).subscribe(
       (response) => {
         this.reservationForm.patchValue(response);
       },
@@ -78,7 +78,7 @@ export class ReservaInfoComponent implements OnInit {
   guardarCambios(): void {
     if (this.reservationForm.valid) {
       this.reservationService.updateReservation(
-        this.reservationForm.value.id_reserva,
+        this.reservationForm.value.id,  // Se cambia id_reserva por id
         this.reservationForm.value
       ).subscribe(
         () => {

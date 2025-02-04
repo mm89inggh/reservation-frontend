@@ -34,30 +34,27 @@ export class ServiceInfoComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.serviceForm = this.fb.group({
-      id_servicio: [null],
+      id: [null],
       nombre: ['', [Validators.required, Validators.minLength(3)]],
-      descripcion: ['', [Validators.required, Validators.minLength(10)]],
-      duracion: [null, [Validators.required, Validators.min(1)]],
-      precio: [null, [Validators.required, Validators.min(0)]],
-      id_negocio: [{ value: null, disabled: true }, Validators.required]
+      negocioId: [{ value: null, disabled: true }, Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const id_servicio = +params['id'];
-      if (id_servicio) {
-        this.loadServiceInfo(id_servicio);
+      const id = +params['id'];
+      if (id) {
+        this.loadServiceInfo(id);
       }
     });
   }
 
   /**
    * Carga la información de un servicio por su ID.
-   * @param id_servicio ID del servicio a cargar.
+   * @param id ID del servicio a cargar.
    */
-  loadServiceInfo(id_servicio: number): void {
-    this.serviceService.getServiceById(id_servicio).subscribe(
+  loadServiceInfo(id: number): void {
+    this.serviceService.getServiceById(id).subscribe(
       (response) => {
         if (response) {
           this.serviceForm.patchValue(response);
@@ -74,7 +71,7 @@ export class ServiceInfoComponent implements OnInit {
    */
   guardarCambios(): void {
     if (this.serviceForm.valid) {
-      this.serviceService.updateService(this.serviceForm.value.id_servicio, this.serviceForm.getRawValue()).subscribe(
+      this.serviceService.updateService(this.serviceForm.value.id, this.serviceForm.getRawValue()).subscribe(
         () => {
           alert('Información del servicio actualizada correctamente');
           this.router.navigate(['/service-list']);

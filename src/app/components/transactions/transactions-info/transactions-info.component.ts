@@ -25,19 +25,12 @@ import { CardModule } from 'primeng/card';
   templateUrl: './transactions-info.component.html',
   styleUrls: ['./transactions-info.component.css']
 })
-export class TransactionsInfoComponent implements OnInit {
+export class TransactionsInfoComponent implements OnInit { 
   transactionForm: FormGroup;
 
   estadoOptions = [
-    { label: 'Pendiente', value: 'Pendiente' },
-    { label: 'Completado', value: 'Completado' },
-    { label: 'Cancelado', value: 'Cancelado' }
-  ];
-
-  metodoPagoOptions = [
-    { label: 'Tarjeta de Crédito', value: 'Tarjeta de Crédito' },
-    { label: 'PayPal', value: 'PayPal' },
-    { label: 'Transferencia Bancaria', value: 'Transferencia Bancaria' }
+    { label: 'Activo', value: true },
+    { label: 'Inactivo', value: false }
   ];
 
   constructor(
@@ -47,12 +40,10 @@ export class TransactionsInfoComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.transactionForm = this.fb.group({
-      id_transaccion: [null],
+      id: [null],  // Se ajusta el nombre según la interfaz
       monto: [null, [Validators.required, Validators.min(1)]],
-      estado: ['', Validators.required],
-      metodo_pago: ['', Validators.required],
-      fecha_transaccion: [null, Validators.required],
-      id_reserva: [null, [Validators.required, Validators.min(1)]]
+      estado: [true, Validators.required], // Cambia a booleano
+      reservaId: [null, [Validators.required, Validators.min(1)]]
     });
   }
 

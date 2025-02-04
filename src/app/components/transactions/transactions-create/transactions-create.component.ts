@@ -29,15 +29,8 @@ export class TransactionsCreateComponent {
   transactionForm: FormGroup;
 
   estadoOptions = [
-    { label: 'Pendiente', value: 'Pendiente' },
-    { label: 'Completado', value: 'Completado' },
-    { label: 'Cancelado', value: 'Cancelado' }
-  ];
-
-  metodoPagoOptions = [
-    { label: 'Tarjeta de Crédito', value: 'Tarjeta de Crédito' },
-    { label: 'PayPal', value: 'PayPal' },
-    { label: 'Transferencia Bancaria', value: 'Transferencia Bancaria' }
+    { label: 'Activo', value: true },
+    { label: 'Inactivo', value: false }
   ];
 
   constructor(
@@ -47,10 +40,8 @@ export class TransactionsCreateComponent {
   ) {
     this.transactionForm = this.fb.group({
       monto: [null, [Validators.required, Validators.min(1)]],
-      estado: ['', Validators.required],
-      metodo_pago: ['', Validators.required],
-      fecha_transaccion: [null, Validators.required],
-      id_reserva: [null, [Validators.required, Validators.min(1)]]
+      estado: [true, Validators.required], // Cambiado a booleano
+      reservaId: [null, [Validators.required, Validators.min(1)]]
     });
   }
 

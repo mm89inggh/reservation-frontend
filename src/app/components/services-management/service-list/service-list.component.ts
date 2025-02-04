@@ -40,19 +40,19 @@ export class ServiceListComponent implements OnInit {
 
   /**
    * Navega a la vista de información de un servicio.
-   * @param id_servicio ID del servicio
+   * @param id ID del servicio
    */
-  verServicio(id_servicio: number): void {
-    this.router.navigate(['/service-info', id_servicio]);
+  verServicio(id: number): void {
+    this.router.navigate(['/service-info', id]);
   }
 
   /**
    * Elimina un servicio por su ID con confirmación.
-   * @param id_servicio ID del servicio a eliminar
+   * @param id ID del servicio a eliminar
    */
-  eliminarServicio(id_servicio: number): void {
+  eliminarServicio(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
-      this.serviceService.deleteService(id_servicio).subscribe(
+      this.serviceService.deleteService(id).subscribe(
         () => {
           alert('Servicio eliminado correctamente');
           this.loadAllServices(); // Recargar la lista de servicios

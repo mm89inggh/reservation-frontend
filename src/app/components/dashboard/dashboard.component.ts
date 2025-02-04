@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
    */
   private getDefaultBusiness(): Business {
     return {
-      id_negocio: 0,
+      id: 0,
       nombre: "Negocio no disponible",
       direccion: "No disponible",
       contacto: "No disponible",

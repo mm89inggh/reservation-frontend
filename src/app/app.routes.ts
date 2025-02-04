@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
-  { path: '', loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [AuthGuard] },
-
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
+  { path: 'dashboard', loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [AuthGuard] },
   // Rutas para Business
   { path: 'business-info/:id', loadComponent: () => import('./components/business/business-info/business-info.component').then(m => m.BusinessInfoComponent), canActivate: [AuthGuard] },
   { path: 'business-list', loadComponent: () => import('./components/business/business-list/business-list.component').then(m => m.BusinessListComponent), canActivate: [AuthGuard] },

@@ -1,5 +1,6 @@
 import { ApplicationConfig, APP_INITIALIZER } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations'; // ✅ Importar animaciones
 
 import { routes } from './app.routes';
 import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
@@ -15,7 +16,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: environment.clientId
       },
       initOptions: {
-        onLoad: 'login-required' ,// 'check-sso'
+        onLoad: 'login-required',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html'
       },
@@ -26,6 +27,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+    provideAnimations(), // ✅ Agregar animaciones aquí
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,

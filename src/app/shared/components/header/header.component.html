@@ -1,17 +1,17 @@
-<!-- src/app/components/header/header.component.html -->
 <header class="app-header">
   <div class="container">
-    <!-- Logo o Nombre -->
-    <h1><i class="pi pi-calendar"></i> Sistema de Reservas</h1>
+    <!-- Logo y Título en una misma fila -->
+    <div class="logo-title-container">
+      <img [src]="'../../../../assets/logo.png'" alt="Logo" class="logo">
+      <h1 class="app-title">Sistema de Reservas</h1>
+    </div>
 
     <!-- Menú de Navegación -->
-    <p-menubar [model]="menuItems" class="menu-bar">
-      <ng-template pTemplate="start">
-        <img src="assets/logo.png" alt="Logo" class="logo">
-      </ng-template>
-      <ng-template pTemplate="end">
-        <button pButton label="Cerrar Sesión" icon="pi pi-sign-out" class="p-button-danger" (click)="logout()"></button>
-      </ng-template>
-    </p-menubar>
+    <p-menubar [model]="menuItems" class="menu-bar"></p-menubar>
+
+    <!-- Botón de Cerrar Sesión -->
+    <div class="logout-container">
+      <button pButton label="Cerrar Sesión" icon="pi pi-sign-out" class="logout-button" (click)="logout()"></button>
+    </div>
   </div>
 </header>
