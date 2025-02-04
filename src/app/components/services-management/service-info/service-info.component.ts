@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-service-info',
@@ -19,10 +20,12 @@ import { CardModule } from 'primeng/card';
     InputNumberModule,
     InputTextModule,
     ButtonModule,
-    CardModule
+    CardModule,
+    HttpClientModule
   ],
   templateUrl: './service-info.component.html',
-  styleUrls: ['./service-info.component.css']
+  styleUrls: ['./service-info.component.css'],
+  providers: [ServiceService]
 })
 export class ServiceInfoComponent implements OnInit {
   serviceForm: FormGroup;

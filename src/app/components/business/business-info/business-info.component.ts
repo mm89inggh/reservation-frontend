@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-business-info',
@@ -17,10 +18,12 @@ import { CardModule } from 'primeng/card';
     InputTextModule,
     InputMaskModule,
     ButtonModule,
-    CardModule
+    CardModule,
+    HttpClientModule
   ],
   templateUrl: './business-info.component.html',
-  styleUrls: ['./business-info.component.css']
+  styleUrls: ['./business-info.component.css'],
+   providers: [BusinessService]
 })
 export class BusinessInfoComponent implements OnInit {
   businessForm: FormGroup;

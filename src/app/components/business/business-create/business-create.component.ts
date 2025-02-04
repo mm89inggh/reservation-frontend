@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-business-create',
@@ -20,11 +21,12 @@ import { MessageService } from 'primeng/api';
     InputMaskModule,
     ButtonModule,
     CardModule,
-    ToastModule
+    ToastModule,
+    HttpClientModule
   ],
   templateUrl: './business-create.component.html',
   styleUrls: ['./business-create.component.css'],
-  providers: [MessageService]
+  providers: [MessageService, BusinessService]
 })
 export class BusinessCreateComponent {
   businessForm: FormGroup;

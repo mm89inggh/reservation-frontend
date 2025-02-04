@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { BusinessService } from '../../../services/business/business.service';
 import { Business } from '../../../models/business.model';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-service-create',
@@ -19,12 +20,14 @@ import { Business } from '../../../models/business.model';
     ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
-    InputTextModule, // Corregido
+    InputTextModule,
     ButtonModule,
-    CardModule
+    CardModule,
+    HttpClientModule
   ],
   templateUrl: './service-create.component.html',
-  styleUrls: ['./service-create.component.css']
+  styleUrls: ['./service-create.component.css'],
+   providers: [ServiceService]
 })
 export class ServiceCreateComponent implements OnInit {
   serviceForm: FormGroup;

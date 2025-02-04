@@ -8,6 +8,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-reserva-info',
@@ -19,10 +20,12 @@ import { CardModule } from 'primeng/card';
     DropdownModule,
     InputTextModule,
     ButtonModule,
-    CardModule
+    CardModule,
+    HttpClientModule
   ],
   templateUrl: './reserva-info.component.html',
-  styleUrls: ['./reserva-info.component.css']
+  styleUrls: ['./reserva-info.component.css'],
+   providers: [ReservationService]
 })
 export class ReservaInfoComponent implements OnInit { 
   reservationForm: FormGroup;

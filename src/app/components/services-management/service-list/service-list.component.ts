@@ -6,14 +6,15 @@ import { Service } from '../../../models/Service-manager.model';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CurrencyPipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-service-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule],
+  imports: [CommonModule, TableModule, ButtonModule, HttpClientModule ],
   templateUrl: './service-list.component.html',
   styleUrls: ['./service-list.component.css'],
-  providers: [CurrencyPipe]
+  providers: [CurrencyPipe, ServiceService]
 })
 export class ServiceListComponent implements OnInit {
   servicios: Service[] = [];

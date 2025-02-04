@@ -8,6 +8,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-transactions-info',
@@ -20,10 +21,12 @@ import { CardModule } from 'primeng/card';
     DropdownModule,
     CalendarModule,
     ButtonModule,
-    CardModule
+    CardModule,
+    HttpClientModule
   ],
   templateUrl: './transactions-info.component.html',
-  styleUrls: ['./transactions-info.component.css']
+  styleUrls: ['./transactions-info.component.css'],
+  providers: [TransactionService]
 })
 export class TransactionsInfoComponent implements OnInit { 
   transactionForm: FormGroup;

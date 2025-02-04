@@ -7,13 +7,15 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-transactions-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, TooltipModule, FormsModule],
+  imports: [CommonModule, TableModule, ButtonModule, TooltipModule, FormsModule, HttpClientModule],
   templateUrl: './transactions-list.component.html',
-  styleUrls: ['./transactions-list.component.css']
+  styleUrls: ['./transactions-list.component.css'],
+  providers: [TransactionService]
 })
 export class TransactionsListComponent implements OnInit {
   transacciones: Transaction[] = [];

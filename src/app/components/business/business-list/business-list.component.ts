@@ -18,7 +18,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
   standalone: true,
   imports: [
     CommonModule,
-    HttpClientModule, // Agregar esta línea para solucionar el error
+    HttpClientModule, 
     TableModule,
     ButtonModule,
     CardModule,
