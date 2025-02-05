@@ -27,7 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   templateUrl: './service-create.component.html',
   styleUrls: ['./service-create.component.css'],
-   providers: [ServiceService]
+  providers: [ServiceService, BusinessService]
 })
 export class ServiceCreateComponent implements OnInit {
   serviceForm: FormGroup;
@@ -35,7 +35,7 @@ export class ServiceCreateComponent implements OnInit {
 
   constructor(
     private serviceService: ServiceService,
-    private businessService: BusinessService, // Inyectamos el servicio de negocios
+    private businessService: BusinessService, 
     private router: Router,
     private fb: FormBuilder
   ) {

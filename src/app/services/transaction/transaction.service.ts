@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  private apiUrl = `${environment.apiUrl}/reservation-service/api/reservas`;
+  private apiUrl = `${environment.apiUrl}/reservation-service/api/transacciones`;
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) {}

@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ServiceService {
-  private apiUrl = `${environment.apiUrl}/reservation-service/api/reservas`;
+  private apiUrl = `${environment.apiUrl}/reservation-service/api/servicios`;
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) {}

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [AuthGuard] },
   // Rutas para Business
   { path: 'business-info/:id', loadComponent: () => import('./components/business/business-info/business-info.component').then(m => m.BusinessInfoComponent), canActivate: [AuthGuard] },
@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'nueva-reserva', loadComponent: () => import('./components/nueva-reserva/nueva-reserva.component').then(m => m.NuevaReservaComponent), canActivate: [AuthGuard] },
   { path: 'reservations', loadComponent: () => import('./components/reservations/reservations.component').then(m => m.ReservationsComponent), canActivate: [AuthGuard] },
   { path: 'reservacion-info/:id', loadComponent: () => import('./components/reserva-info/reserva-info/reserva-info.component').then(m => m.ReservaInfoComponent), canActivate: [AuthGuard] },
-  
+
   // Rutas para Transactions
   { path: 'transactions-list', loadComponent: () => import('./components/transactions/transactions-list/transactions-list.component').then(m => m.TransactionsListComponent), canActivate: [AuthGuard] },
   { path: 'transactions-info/:id', loadComponent: () => import('./components/transactions/transactions-info/transactions-info.component').then(m => m.TransactionsInfoComponent), canActivate: [AuthGuard] },

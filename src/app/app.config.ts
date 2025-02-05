@@ -27,7 +27,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideAnimations(), // ✅ Agregar animaciones aquí
+    provideAnimations(), 
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,

@@ -5,7 +5,7 @@
     <form [formGroup]="businessForm" (ngSubmit)="crearNegocio()">
       <div class="p-fluid form-group">
         <label for="nombre">Nombre:</label>
-        <p-inputText id="nombre" formControlName="nombre" placeholder="Ingrese el nombre"></p-inputText>
+        <input id="nombre" pInputText formControlName="nombre" placeholder="Ingrese el nombre" />
         <small *ngIf="businessForm.controls['nombre'].invalid && businessForm.controls['nombre'].touched" class="error">
           Nombre es obligatorio (mín. 3 caracteres).
         </small>
@@ -13,7 +13,7 @@
 
       <div class="p-fluid form-group">
         <label for="direccion">Dirección:</label>
-        <p-inputText id="direccion" formControlName="direccion" placeholder="Ingrese la dirección"></p-inputText>
+        <input id="direccion" pInputText formControlName="direccion" placeholder="Ingrese la dirección" />
         <small *ngIf="businessForm.controls['direccion'].invalid && businessForm.controls['direccion'].touched" class="error">
           Dirección es obligatoria.
         </small>
@@ -29,7 +29,7 @@
 
       <div class="p-fluid form-group">
         <label for="coordenadas">Coordenadas:</label>
-        <p-inputText id="coordenadas" formControlName="coordenadas" placeholder="Ej: 40.7128, -74.0060"></p-inputText>
+        <input id="coordenadas" pInputText formControlName="coordenadas" placeholder="Ej: 40.7128, -74.0060" />
       </div>
 
       <div class="buttons">
