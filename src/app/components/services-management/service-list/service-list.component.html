@@ -9,14 +9,12 @@
     <ng-template pTemplate="header">
       <tr>
         <th>Nombre</th>
-        <th>ID Negocio</th>
         <th>Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-servicio>
       <tr>
         <td>{{ servicio.nombre }}</td>
-        <td>{{ servicio.negocioId }}</td>
         <td>
           <button pButton type="button" icon="pi pi-eye" class="p-button-text p-button-info" (click)="verServicio(servicio.id)" title="Ver"></button>
           <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-danger" (click)="eliminarServicio(servicio.id)" title="Eliminar"></button>

@@ -5,27 +5,27 @@
       <form [formGroup]="businessForm" (ngSubmit)="guardarCambios()">
           <div class="p-fluid form-group">
               <label for="nombre">Nombre:</label>
-              <p-inputText id="nombre" formControlName="nombre" placeholder="Ingrese el nombre"></p-inputText>
+              <input pInputText id="nombre" formControlName="nombre" placeholder="Ingrese el nombre"/>
           </div>
 
           <div class="p-fluid form-group">
               <label for="direccion">Dirección:</label>
-              <p-inputText id="direccion" formControlName="direccion" placeholder="Ingrese la dirección"></p-inputText>
+              <input pInputText id="direccion" formControlName="direccion" placeholder="Ingrese la dirección"/>
           </div>
 
           <div class="p-fluid form-group">
               <label for="contacto">Contacto:</label>
-              <p-inputMask id="contacto" formControlName="contacto" mask="(999) 999-9999" placeholder="(123) 456-7890"></p-inputMask>
+              <input pInputText id="contacto" formControlName="contacto" mask="(999) 999-9999" placeholder="(123) 456-7890"/>
           </div>
 
           <div class="p-fluid form-group">
               <label for="coordenadas">Coordenadas:</label>
-              <p-inputText id="coordenadas" formControlName="coordenadas" placeholder="Ej: 40.7128, -74.0060"></p-inputText>
+              <input pInputText id="coordenadas" formControlName="coordenadas" placeholder="Ej: 40.7128, -74.0060"/>
           </div>
 
           <div class="buttons">
-              <p-button type="submit" label="Guardar Cambios" icon="pi pi-check" class="p-button-success"></p-button>
-              <p-button type="button" label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="cancelar()"></p-button>
+              <p-button type="submit" label="Guardar Cambios" icon="pi pi-check"></p-button>
+              <p-button type="button" label="Cancelar" icon="pi pi-times" (click)="cancelar()"></p-button>
           </div>
       </form>
   </p-card>

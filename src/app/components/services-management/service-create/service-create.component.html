@@ -10,12 +10,6 @@
           <input id="nombre" type="text" pInputText formControlName="nombre" placeholder="Ingrese el nombre del servicio">
         </div>
 
-        <!-- ID Negocio -->
-        <div class="p-field">
-          <label for="negocioId">ID Negocio:</label>
-          <p-inputNumber id="negocioId" formControlName="negocioId" [min]="1"></p-inputNumber>
-        </div>
-
         <!-- Botones -->
         <div class="form-buttons">
           <button pButton type="submit" label="Crear Servicio" icon="pi pi-check" class="p-button-success" [disabled]="serviceForm.invalid"></button>

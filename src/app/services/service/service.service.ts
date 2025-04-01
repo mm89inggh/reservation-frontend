@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, mergeMap, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Service } from '../../models/Service-manager.model';
 import { environment } from '../../../environments/environment';
+import { TokenUtilService } from '../token-util/token-util.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ServiceService {
   private apiUrl = `${environment.apiUrl}/reservation-service/api/servicios`;
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenUtilService: TokenUtilService) {}
 
   /**
    * Obtiene la lista de todos los servicios.
@@ -29,27 +30,45 @@ export class ServiceService {
    */
   getServiceById(id: number): Observable<Service> {
     const body = {
-      targetMethod: "GET",
-      body: { id }
+      targetMethod: "GET"
     };
-    return this.http.post<Service>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    return this.http.post<Service>(`${this.apiUrl}/${id}`, JSON.stringify(body), { headers: this.headers });
+  }
+
+  /**
+   * Obtiene los servicio por negocio
+   * @param id Id del negocio
+   * @returns  Lista de servicios
+   */
+  getServiceByNegocioId(id: number): Observable<Service[]> {
+    const body = {
+      targetMethod: "GET"
+    };
+    return this.http.post<Service[]>(this.apiUrl+"/negocios/"+id, JSON.stringify(body), { headers: this.headers });
   }
 
  /**
  * Crea un nuevo servicio en el sistema.
  * @param servicio Datos del servicio a crear (sin ID).
  * @returns Observable con la respuesta del backend.
- */
-createService(servicio: Omit<Service, 'id'>): Observable<Service> {
-    const body = {
-      targetMethod: "POST",
-      body: {
-        id: 0,
-        ...servicio
-      }
-    };
-    return this.http.post<Service>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
-  }
+ * */
+  createService(nombre: string): Observable<Service> {
+      const negocioId$ = from(this.tokenUtilService.getAttribute('negocioId'));
+      return negocioId$.pipe(
+        mergeMap(negocioId => {
+          const body = {
+            targetMethod: 'POST',
+            body: {
+              nombre,
+              negocioId,
+            },
+          };
+          return this.http.post<Service>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+        })
+      );
+    }
+    
+
 
   /**
    * Actualiza un servicio existente.
@@ -59,13 +78,13 @@ createService(servicio: Omit<Service, 'id'>): Observable<Service> {
    */
   updateService(id: number, updatedInfo: Partial<Service>): Observable<Service> {
     const body = {
-      targetMethod: "UPDATE",
+      targetMethod: "PATCH",
       body: {
-        id,
-        ...updatedInfo
+        nombre : updatedInfo.nombre
       }
     };
-    return this.http.post<Service>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    console.log(JSON.stringify(body))
+    return this.http.post<Service>(`${this.apiUrl}/${id}`, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
@@ -75,9 +94,8 @@ createService(servicio: Omit<Service, 'id'>): Observable<Service> {
    */
   deleteService(id: number): Observable<void> {
     const body = {
-      targetMethod: "DELETE",
-      body: { id }
+      targetMethod: "DELETE"
     };
-    return this.http.post<void>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    return this.http.post<void>(`${this.apiUrl}/${id}`, JSON.stringify(body), { headers: this.headers });
   }
 }

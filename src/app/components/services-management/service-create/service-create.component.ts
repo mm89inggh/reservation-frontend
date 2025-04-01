@@ -10,6 +10,7 @@ import { CardModule } from 'primeng/card';
 import { BusinessService } from '../../../services/business/business.service';
 import { Business } from '../../../models/business.model';
 import { HttpClientModule } from '@angular/common/http';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-service-create',
@@ -40,8 +41,7 @@ export class ServiceCreateComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.serviceForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      negocioId: [null, [Validators.required, Validators.min(1)]]
+      nombre: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
@@ -60,7 +60,7 @@ export class ServiceCreateComponent implements OnInit {
     );
   }
 
-  crearServicio(): void {
+  /*crearServicio(): void {
     if (this.serviceForm.valid) {
       this.serviceService.createService(this.serviceForm.value).subscribe(
         () => {
@@ -73,8 +73,28 @@ export class ServiceCreateComponent implements OnInit {
         }
       );
     }
-  }
+  }*/
 
+    crearServicio(): void {
+      if (this.serviceForm.valid) {
+        this.serviceService.createService(this.serviceForm.value.nombre).subscribe({
+          next: () => {
+            alert('Servicio creado correctamente');
+            this.router.navigate(['/service-list']);
+          },
+          error: (error) => {
+            console.error('Error al crear el servicio:', error);
+            alert('Error al crear el servicio');
+          },
+          complete: () => {
+            console.log('Operación completada');
+          },
+        });
+    
+      }
+    }
+    
+    
   cancelar(): void {
     this.router.navigate(['/service-list']);
   }

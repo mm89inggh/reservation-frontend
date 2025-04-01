@@ -45,7 +45,6 @@ export class AppComponent {
   public login(): void {
 
     this.keycloakService.login();
-
   }
 
   public logout(): void {

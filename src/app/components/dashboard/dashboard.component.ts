@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
    * Carga la información del negocio desde el backend.
    */
   loadBusinessInfo(): void {
-    const idNegocio = 1; // Ajustar según el negocio en sesión
+    const idNegocio = 1; 
     this.businessService.getBusinessById(idNegocio).subscribe(
       (response) => {
         this.negocio = response ?? this.getDefaultBusiness();

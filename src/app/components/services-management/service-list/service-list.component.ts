@@ -7,6 +7,9 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { TokenUtilService } from '../../../services/token-util/token-util.service';
+import { catchError } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-service-list',
@@ -19,10 +22,21 @@ import { HttpClientModule } from '@angular/common/http';
 export class ServiceListComponent implements OnInit {
   servicios: Service[] = [];
 
-  constructor(private serviceService: ServiceService, private router: Router) {}
+  constructor(private serviceService: ServiceService, private router: Router, private tokenUtilService: TokenUtilService) {}
 
   ngOnInit(): void {
-    this.loadAllServices();
+    this.cargar();
+  }
+
+  cargar(){
+    this.tokenUtilService.getAttribute('negocioId')
+    .then(negocioId => {
+      console.log('Custom Field:', negocioId);
+      this.porNegocio(negocioId)
+    })
+    .catch(error => {
+      console.error('Failed to retrieve custom field:', error);
+    });
   }
 
   /**
@@ -38,6 +52,21 @@ export class ServiceListComponent implements OnInit {
       }
     );
   }
+
+  porNegocio(id: number): void {
+    this.serviceService.getServiceByNegocioId(id)
+      .pipe(
+        catchError(error => {
+          console.error('Error al obtener la lista de servicios:', error);
+          throw error; // Propagar el error
+        })
+      )
+      .subscribe(response => {
+        this.servicios = response;
+      });
+  }
+  
+
 
   /**
    * Navega a la vista de información de un servicio.
@@ -56,7 +85,7 @@ export class ServiceListComponent implements OnInit {
       this.serviceService.deleteService(id).subscribe(
         () => {
           alert('Servicio eliminado correctamente');
-          this.loadAllServices(); // Recargar la lista de servicios
+          this.cargar();
         },
         (error) => {
           console.error('Error al eliminar el servicio:', error);

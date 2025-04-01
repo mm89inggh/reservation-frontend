@@ -7,7 +7,6 @@
   top: 0;
   width: 100%;
   z-index: 1000;
-  padding: 15px 0;
   transition: all 0.3s ease-in-out;
 }
 
@@ -18,20 +17,23 @@
   justify-content: space-between;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 5px 10px;
   gap: 20px;
+  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 /* ===== Logo y Título ===== */
 .logo-title-container {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .logo {
-  height: 55px;
+  height: 35px;
   width: auto;
   transition: transform 0.3s ease-in-out;
 }
@@ -42,7 +44,7 @@
 
 .app-title {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: bold;
   letter-spacing: 1px;
   text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.3);
@@ -50,7 +52,7 @@
 
 /* ===== Menú ===== */
 .menu-container {
-  flex: 2;
+  flex: 3;
   display: flex;
   justify-content: center;
 }
@@ -101,8 +103,9 @@
     justify-content: center;
   }
 
-  .menu-bar {
+  menu-bar {
     width: 100%;
+    border-radius: 0px !important
   }
 
   .logout-container {

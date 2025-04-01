@@ -35,11 +35,11 @@ export class BusinessInfoComponent implements OnInit {
     private router: Router
   ) {
     this.businessForm = this.fb.group({
-      id_negocio: [0],
+      id: [{ value: '', disabled: true }],
       nombre: ['', Validators.required],
       direccion: ['', Validators.required],
       contacto: ['', Validators.required],
-      coordenadas: ['']
+      coordenadas: ['', Validators.required]
     });
   }
 
@@ -71,19 +71,24 @@ export class BusinessInfoComponent implements OnInit {
    */
   guardarCambios(): void {
     if (this.businessForm.valid) {
-      this.businessService.updateBusiness(
-        this.businessForm.value.id_negocio,
-        this.businessForm.value
-      ).subscribe(
-        () => {
-          alert('Negocio actualizado correctamente');
-          this.router.navigate(['/business-list']);
-        },
-        (error) => {
-          console.error('Error al actualizar el negocio:', error);
-          alert('Error al actualizar el negocio');
+      this.route.params.subscribe(params => {
+        const id_negocio = + params['id'];
+        if (id_negocio) {
+          this.businessService.updateBusiness(
+            id_negocio,
+            this.businessForm.value
+          ).subscribe(
+            () => {
+              alert('Negocio actualizado correctamente');
+              this.router.navigate(['/dashboard']);
+            },
+            (error) => {
+              console.error('Error al actualizar el negocio:', error);
+              alert('Error al actualizar el negocio');
+            }
+          );
         }
-      );
+      });      
     }
   }
 
@@ -91,6 +96,6 @@ export class BusinessInfoComponent implements OnInit {
    * Cancela la edición y regresa a la lista de negocios.
    */
   cancelar(): void {
-    this.router.navigate(['/business-list']);
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -2,7 +2,6 @@
   <p-panel header="Bienvenido, {{ negocio?.nombre || 'Propietario' }}" class="dashboard-header">
     <div class="dashboard-nav">
       <p-button label="Servicios" icon="pi pi-briefcase" routerLink="/service-list" class="p-button-rounded p-button-info"></p-button>
-      <p-button label="Notificaciones" icon="pi pi-bell" routerLink="/notifications" class="p-button-rounded p-button-warning"></p-button>
       <p-button label="Mi Negocio" icon="pi pi-building" [routerLink]="['/business-info', negocio?.id]" class="p-button-rounded p-button-primary"></p-button>
       <p-button label="Transacciones" icon="pi pi-credit-card" routerLink="/transactions-list" class="p-button-rounded p-button-success"></p-button>
     </div>

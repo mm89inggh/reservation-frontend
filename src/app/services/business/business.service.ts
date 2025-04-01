@@ -20,10 +20,9 @@ export class BusinessService {
    */
   getBusinessById(id: number): Observable<Business> {
     const body = {
-      targetMethod: "GET",
-      body: { id }
+      targetMethod: "GET"
     };
-    return this.http.post<Business>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    return this.http.post<Business>(this.apiUrl+"/"+id, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
@@ -34,10 +33,10 @@ export class BusinessService {
    */
   updateBusiness(id: number, updatedInfo: Partial<Business>): Observable<Business> {
     const body = {
-      targetMethod: "UPDATE",
-      body: { id, ...updatedInfo }
+      targetMethod: "PATCH",
+      body: { ...updatedInfo }
     };
-    return this.http.post<Business>(this.apiUrl, JSON.stringify(body), { headers: this.headers });
+    return this.http.post<Business>(`${this.apiUrl}/${id}`, JSON.stringify(body), { headers: this.headers });
   }
 
   /**
